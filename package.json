@@ -1,0 +1,52 @@
+{
+  "name": "React-Hot-Dev-Starter",
+  "version": "1.0.0",
+  "description": "A skeleton project for starting with a hot-loading development react project server",
+  "main": "index.html",
+  "scripts": {
+    "start": "node devServer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VasilyShelkov/React-Hot-Dev-Starter.git"
+  },
+  "keywords": [
+    "Node.js",
+    "ReactJs",
+    "express",
+    "hot-loading",
+    "webpack-hot-middleware",
+    "react-transform-hmr",
+    "react-transform-catch-errors"
+  ],
+  "author": "Vasily Shelkov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VasilyShelkov/React-Hot-Dev-Starter/issues"
+  },
+  "homepage": "https://github.com/VasilyShelkov/React-Hot-Dev-Starter#readme",
+  "dependencies": {
+    "babel-core": "^5.8.35",
+    "babel-loader": "^5.4.0",
+    "babel-plugin-react-transform": "^1.1.1",
+    "bootstrap": "^4.0.0-alpha.2",
+    "css-loader": "^0.23.1",
+    "eslint": "^1.6.0",
+    "eslint-plugin-react": "^3.16.1",
+    "express": "^4.13.4",
+    "history": "^1.17.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-router": "^1.0.3",
+    "react-transform-catch-errors": "^1.0.0",
+    "react-transform-hmr": "^1.0.2",
+    "redbox-react": "^1.2.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.12"
+  },
+  "devDependencies": {
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-hot-middleware": "^2.6.4"
+  }
+}
