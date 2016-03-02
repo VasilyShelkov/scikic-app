@@ -4,8 +4,9 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   entry: [
+    'eventsource-polyfill', //necessary evil for hot loading with IE
     'webpack-hot-middleware/client',
-    './app/App.js'
+    './src/index.js'
   ],
   output: {
     path: path.join(__dirname, 'public'),
@@ -20,7 +21,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'app')
+      include: path.join(__dirname, 'src')
     }, {
       test: /\.css$/,
       loader: 'style!css',

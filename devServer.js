@@ -13,7 +13,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/semantic', express.static(path.join(__dirname, 'semantic')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/bootstrap', express.static(
 	path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'css')
