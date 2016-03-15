@@ -4,10 +4,11 @@
     "env": {
         "browser": true,
         "node": true,
-        "mocha": true
+        "mocha": true,
+        "jquery": true
     },
     "rules": {
-        "indent": [2,"tab"],
+        "indent": [2, 2],
         "no-console": 0,
         "no-alert": 0
     },

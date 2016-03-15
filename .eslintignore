@@ -1,4 +1,8 @@
-node_modules
+node_modules/*
 webpack.config.dev.js
 webpack.config.prod.js
-devServer.js
+semantic/*
+semantic.json
+LICENSE
+package.json
+README.md

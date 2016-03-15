@@ -1,20 +1,20 @@
 import expect from 'expect';
 import deepFreeze from 'deep-freeze';
-import ChatReducer from './ChatReducer'
+import chatReducer from './chatReducer';
 
-describe(ChatReducer, () => {
-	it('should set interested to action', () => {
-		const stateBefore = {};
-		const action = {
-			type: 'INTERESTED',
-			interested: false
-		};
+describe(chatReducer, () => {
+  it('should set interested to action', () => {
+    const stateBefore = {};
+    const action = {
+      type: 'INTERESTED',
+      interested: false,
+    };
 
-		const stateAfter = { interested: false };
-		
-		deepFreeze(stateBefore);
-		deepFreeze(action);
+    const stateAfter = { interested: false };
 
-		expect(ChatReducer(stateBefore, action)).toEqual(stateAfter);
-	});
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
 });

@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import ChatApp from './chat/ChatApp';
 import ScikicProfile from './infopages/ScikicProfile';
 
-const Scikic = () => {
-	return(
+const Scikic = () => (
 		<div>
 			<ChatApp>
 				<ScikicProfile />
 			</ChatApp>
 		</div>
-	);
-};
+);
 
 export default Scikic;
