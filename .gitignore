@@ -28,4 +28,3 @@ node_modules
 
 #Semantic build files that can be recreated used gulp build command
 semantic/dist
-semantic/tasks
