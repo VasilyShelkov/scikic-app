@@ -5,7 +5,7 @@ import InterestedInitialQuestion from './InterestedInitialQuestion';
 
 
 let QuestionsList = ({ chat, onUserInterested }) => (
-  <div className="ui segment">
+  <div>
     {chat.interested ?
       'questions'
       :
