@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const ChatApp = ({ children }) => (
 	<div className="col-xs-12 col-md-6 col-lg-5 col-xl-4">

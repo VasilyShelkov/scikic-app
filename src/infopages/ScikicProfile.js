@@ -13,7 +13,7 @@ const ScikicProfile = () => (
     <p>
 			I will ask you some basic questions
 			(which you can choose to skip if you find them too personal)
-			and with my psychic powers (and machine learning),
+			and with my psychic(machine learning) powers,
 			I shall try to predict the unpredictable!
 		</p>
 		<p>
