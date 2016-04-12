@@ -1,6 +1,8 @@
+import { INTERESTED } from './chatActions';
+
 const chatReducer = (state = {}, action) => {
   switch (action.type) {
-  case 'INTERESTED':
+  case INTERESTED:
     return {
       interested: action.interested,
     };
