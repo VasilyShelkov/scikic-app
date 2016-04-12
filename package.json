@@ -36,6 +36,7 @@
     "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
     "redux": "^3.4.0",
+    "redux-thunk": "^2.0.1",
     "semantic-ui": "^2.1.8"
   },
   "devDependencies": {
