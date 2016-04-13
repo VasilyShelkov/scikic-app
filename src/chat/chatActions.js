@@ -26,15 +26,18 @@ export const fetchQuestion = () => {
   return (dispatch, getState) =>
     newPromiseChain()
       .then(() => dispatch(requestNextQuestion))
-      .then(() => ({
-        version: '1',
-        data: {
-          questions_asked: getState().chat.questions,
-          unprocessed_questions: ,
-          facts: getState().chat.facts,
-        }
-        apikey: 'YOUR_API_KEY_HERE',
-      }))
+      .then(() => {
+        const questionMetas = getState().chat.questions.map(question => question.meta);
+        return ({
+          version: '1',
+          data: {
+            questions_asked: questionMetas,
+            unprocessed_questions: questionMetas,
+            facts: getState().chat.facts,
+          },
+          apikey: 'YOUR_API_KEY_HERE',
+        })
+      })
       .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions)
       .then(response => response.json())
       .then(nextQuestion => dispatch(recieveNextQuestion(nextQuestion)))
