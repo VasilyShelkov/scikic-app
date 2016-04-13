@@ -1,4 +1,4 @@
-import { INTERESTED, REQUEST_NEXT_QUESTION, RECIEVE_NEXT_QUESTION } from './chatActions';
+import { INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION } from './chatActions';
 
 let questionId = 1;
 
@@ -26,7 +26,7 @@ const chatReducer = (state = initialState, action) => {
         isFetching: questionId,
       }
     };
-  case RECIEVE_NEXT_QUESTION:
+  case RECEIVE_NEXT_QUESTION:
     return {
       ...state,
       questions: {
@@ -46,8 +46,9 @@ const chatReducer = (state = initialState, action) => {
 
 const questionReducer = (state = {}, action) => {
   switch (action.type) {
-  case RECIEVE_NEXT_QUESTION:
+  case RECEIVE_NEXT_QUESTION:
     return {
+      id: questionId,
       string: action.nextQuestion.question_string,
       expectedAnswerType: action.nextQuestion.question_string.type,
       options: action.nextQuestion.question_string.options,

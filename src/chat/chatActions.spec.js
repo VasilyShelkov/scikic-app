@@ -1,5 +1,6 @@
 import expect from 'expect';
 import * as actions from './chatActions';
+import { exampleRecievedQuestion } from './../utilities';
 
 describe('#chatActions', () => {
   it('should create an action as to whether the user is interested', () => {
@@ -23,33 +24,10 @@ describe('#chatActions', () => {
     expect(actualAction).toEqual(expectedAction);
   });
 
-  it('should create an action to recieve a new question', () => {
-    const exampleRecievedQuestion = {
-      facts: {},
-      question_string: {
-        type: 'select',
-        question: 'How do you travel to work?',
-        options: [
-          'Not in employment',
-          'Work mainly from home',
-          'Train/Tram/underground',
-          'Bus',
-          'Car/van',
-          'Bicycle',
-          'On Foot',
-          'Other'
-        ],
-      },
-      question: {
-        detail: '',
-        dataitem: 'travel',
-        dataset: 'lifestyle'
-      }
-    };
-
-    const actualAction = actions.recieveNextQuestion(exampleRecievedQuestion);
+  it('should create an action to receive a new question', () => {
+    const actualAction = actions.receiveNextQuestion(exampleRecievedQuestion);
     const expectedAction = {
-      type: actions.RECIEVE_NEXT_QUESTION,
+      type: actions.RECEIVE_NEXT_QUESTION,
       nextQuestion: exampleRecievedQuestion,
     };
 

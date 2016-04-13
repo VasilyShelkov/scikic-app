@@ -16,9 +16,9 @@ export const requestNextQuestion = () => ({
   type: REQUEST_NEXT_QUESTION
 });
 
-export const RECIEVE_NEXT_QUESTION = 'RECIEVE_NEXT_QUESTION';
-export const recieveNextQuestion = (nextQuestion) => ({
-  type: RECIEVE_NEXT_QUESTION,
+export const RECEIVE_NEXT_QUESTION = 'RECEIVE_NEXT_QUESTION';
+export const receiveNextQuestion = (nextQuestion) => ({
+  type: RECEIVE_NEXT_QUESTION,
   nextQuestion
 });
 
@@ -40,4 +40,4 @@ export const fetchQuestion = () =>
       })
       .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions))
       .then(response => response.json())
-      .then(nextQuestion => dispatch(recieveNextQuestion(nextQuestion)));
+      .then(nextQuestion => dispatch(receiveNextQuestion(nextQuestion)));

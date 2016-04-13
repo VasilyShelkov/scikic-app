@@ -51,3 +51,30 @@ export const makePostHeader = (body) => {
     body,
   };
 };
+
+/**
+ *
+ *
+ */
+export const exampleRecievedQuestion = {
+  facts: {},
+  question_string: {
+    type: 'select',
+    question: 'How do you travel to work?',
+    options: [
+      'Not in employment',
+      'Work mainly from home',
+      'Train/Tram/underground',
+      'Bus',
+      'Car/van',
+      'Bicycle',
+      'On Foot',
+      'Other'
+    ],
+  },
+  question: {
+    detail: '',
+    dataitem: 'travel',
+    dataset: 'lifestyle'
+  }
+};
