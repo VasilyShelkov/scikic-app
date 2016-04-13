@@ -4,6 +4,7 @@ const chatReducer = (state = {}, action) => {
   switch (action.type) {
   case INTERESTED:
     return {
+      ...state,
       interested: action.interested,
     };
   default:

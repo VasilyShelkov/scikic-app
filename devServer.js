@@ -20,6 +20,10 @@ app.use('/bootstrap', express.static(
 	path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'css')
 	)
 );
+app.use('/typist', express.static(
+	path.join(__dirname, 'node_modules', 'react-typist', 'dist')
+	)
+);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/public', 'index.html'));

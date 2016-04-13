@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import isUserInterested from './chatActions';
+import { isUserInterested } from './chatActions';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
 
-let QuestionsList = ({ chat, onUserInterested }) => (
-  <div>
-    {chat.interested ?
-      'questions'
-      :
-        <InterestedInitialQuestion interested={chat.interested} onClick={onUserInterested} />}
-  </div>
-);
+class QuestionsList extends Component {
+
+  componentDidMount() {
+    console.log('did mount');
+  }
+
+  componentWillUpdate() {
+    console.log('will update');
+  }
+
+  componentDidUpdate() {
+    console.log('did update');
+  }
+
+  render() {
+    console.log('render');
+    const { chat, onUserInterested } = this.props;
+    return (
+      <div>
+        {
+          chat.interested ?
+          'questions'
+          :
+            <InterestedInitialQuestion interested={chat.interested} onClick={onUserInterested} />
+        }
+      </div>
+    );
+  }
+}
+QuestionsList.propTypes = {
+  chat: React.PropTypes.object,
+  onUserInterested: React.PropTypes.func,
+}
 
 const mapStateToProps = (state) => ({ chat: state.chat });
 
