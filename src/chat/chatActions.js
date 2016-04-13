@@ -1,15 +1,15 @@
-import { newPromiseChain, fetchPost } from './../utilities.js'
+import { newPromiseChain, fetchPost } from './../utilities.js';
 
-const scikicUrl = 'http://dev.scikic.org'
+const scikicUrl = 'http://dev.scikic.org';
 
 export const INTERESTED = 'INTERESTED';
 export const isUserInterested = (interested) => {
   fetchQuestion();
-  return({
+  return ({
     type: INTERESTED,
     interested
   });
-}
+};
 
 export const REQUEST_NEXT_QUESTION = 'REQUEST_NEXT_QUESTION';
 export const requestNextQuestion = () => ({
@@ -27,7 +27,7 @@ export const fetchQuestion = () =>
     newPromiseChain()
       .then(() => dispatch(requestNextQuestion))
       .then(() => {
-        const questionMetas = getState().chat.questions.map(question => question.meta);
+        const questionMetas = getState().chat.questions.list.map(question => question.extraInfo);
         return ({
           version: '1',
           data: {
