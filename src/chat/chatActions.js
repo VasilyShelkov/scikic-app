@@ -22,8 +22,8 @@ export const recieveNextQuestion = (nextQuestion) => ({
   nextQuestion
 });
 
-export const fetchQuestion = () => {
-  return (dispatch, getState) =>
+export const fetchQuestion = () =>
+  (dispatch, getState) =>
     newPromiseChain()
       .then(() => dispatch(requestNextQuestion))
       .then(() => {
@@ -36,9 +36,8 @@ export const fetchQuestion = () => {
             facts: getState().chat.facts,
           },
           apikey: 'YOUR_API_KEY_HERE',
-        })
+        });
       })
-      .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions)
+      .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions))
       .then(response => response.json())
-      .then(nextQuestion => dispatch(recieveNextQuestion(nextQuestion)))
-}
+      .then(nextQuestion => dispatch(recieveNextQuestion(nextQuestion)));
