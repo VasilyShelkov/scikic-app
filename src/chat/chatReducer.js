@@ -2,7 +2,7 @@ import { INTERESTED, REQUEST_NEXT_QUESTION, RECIEVE_NEXT_QUESTION } from './chat
 
 let questionId = 1;
 
-const initialState = {
+export const initialState = {
   questions: {
     list: [],
     isFetching: false,
@@ -22,7 +22,7 @@ const chatReducer = (state = initialState, action) => {
     return {
       ...state,
       questions: {
-        ...state,
+        ...state.questions,
         isFetching: questionId,
       }
     };
