@@ -4,7 +4,9 @@ const scikicUrl = 'http://dev.scikic.org';
 
 export const INTERESTED = 'INTERESTED';
 export const isUserInterested = (interested) => {
-  fetchQuestion();
+  if (interested) {
+    fetchQuestion();
+  }
   return ({
     type: INTERESTED,
     interested
