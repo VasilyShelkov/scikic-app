@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
-import { isUserInterested } from './chatActions';
+import { isUserInterested, fetchQuestion } from './chatActions';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
 
@@ -14,19 +14,21 @@ class QuestionsList extends Component {
     this.uninterested = null;
   }
 
-  componentDidUpdate() {
-    if (this.props.chat.interested === false) {
-      $(this.initial).transition({
-        animation: 'slide down',
-        onComplete: () => $(this.uninterested).transition('slide down')
-      });
-    }
+  componentDidUpdate(prevProps) {
+    if (this.props.chat.interest !== prevProps.chat.interested) {
+      if (this.props.chat.interested === false) {
+        $(this.initial).transition({
+          animation: 'slide down',
+          onComplete: () => $(this.uninterested).transition('slide down')
+        });
+      }
 
-    if (this.props.chat.interested) {
-      $(this.initial).transition({
-        animation: 'slide down',
-        onComplete: () => $(this.questions).transition('slide down')
-      });
+      if (this.props.chat.interested && $(this.questions).is(':hidden')) {
+        $(this.initial).transition({
+          animation: 'slide down',
+          onComplete: () => $(this.questions).transition('slide down')
+        });
+      }
     }
   }
 
@@ -65,6 +67,9 @@ const mapStateToProps = (state) => ({ chat: state.chat });
 
 const mapDispatchToProps = (dispatch) => ({
   onUserInterested: (interested) => {
+    if (interested) {
+      dispatch(fetchQuestion());
+    }
     dispatch(isUserInterested(interested));
   },
 });
