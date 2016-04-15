@@ -15,7 +15,7 @@ class QuestionsList extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.chat.interest !== prevProps.chat.interested) {
+    if (this.props.chat.interested !== prevProps.chat.interested) {
       if (this.props.chat.interested === false) {
         $(this.initial).transition({
           animation: 'slide down',
@@ -34,10 +34,35 @@ class QuestionsList extends Component {
 
   render() {
     const { chat, onUserInterested } = this.props;
+    let optionButtons;
     return (
       <div>
         <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
-          questions
+          {chat.questions.list.map(question => (
+            <div key={`q${question.id}`}>
+              <Typist className="inline" startDelay={500}
+                cursor={{ hideWhenDone: !question.id === chat.questions.currentlySelected }}
+                onTypingDone={() => $(optionButtons).transition('swing down')}
+              >
+                <img className="ui avatar image"
+                  src="../images/EmilyTheStrange.png"
+                  alt="Emily the Strange Scikic Logo"
+                />
+                &nbsp;
+                {question.string}
+              </Typist>
+              <br />
+              <div className="ui buttons transition hidden" ref={(node) => optionButtons = node}>
+                {question.options.map((answerOption, i) => (
+                  <button key={`q${question.id}o${i}`} className="ui button"
+                    onClick={e => console.log($(e.target).text())}
+                  >
+                    {answerOption}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div ref={(node) => this.initial = node }>

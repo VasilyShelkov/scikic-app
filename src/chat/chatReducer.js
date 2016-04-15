@@ -49,7 +49,7 @@ const questionReducer = (state = {}, action) => {
   case RECEIVE_NEXT_QUESTION:
     return {
       id: questionId,
-      string: action.nextQuestion.question_string,
+      string: action.nextQuestion.question_string.question,
       expectedAnswerType: action.nextQuestion.question_string.type,
       options: action.nextQuestion.question_string.options,
       extraInfo: action.nextQuestion.question,

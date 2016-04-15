@@ -78,3 +78,21 @@ export const exampleRecievedQuestion = {
     dataset: 'lifestyle'
   }
 };
+
+export const exampleRecievedQuestiontwo = {
+  facts: {},
+  question_string: {
+    type: 'select',
+    question: 'What gender are you?',
+    options: [
+      'Male',
+      'Female',
+      'Other'
+    ],
+  },
+  question: {
+    detail: '',
+    dataitem: 'gender',
+    dataset: 'demographic'
+  }
+};
