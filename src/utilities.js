@@ -37,20 +37,13 @@ export const fetchPost = (url, body) => (
  * @param body The body of the request, e.g. {'query': 'liverpool'}
  * @returns {{method: string, headers: {Accept: string, Content-Type: string}, body: *}}
  */
-export const makePostHeader = (body) => {
-  if (typeof body === 'object') {
-    body = JSON.stringify(body);
-  }
-
-  return {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body,
-  };
-};
+export const makePostHeader = (body) => ({
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+  },
+  body: JSON.stringify(body),
+});
 
 /**
  *
