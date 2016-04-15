@@ -9,7 +9,7 @@ const ScikicProfile = () => (
 				/>
 			</div>
 			<div className="content">
-				<h2 style={{ textAlign: 'center' }}>Welcome to the Scikic</h2>
+				<h2 style={{ textAlign: 'center' }}>The Scikic</h2>
 				<div className="description">
 					I will ask you some basic questions
 					(which you can choose to skip if you find them too personal)
