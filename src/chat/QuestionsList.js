@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
 import { isUserInterested, fetchQuestion } from './chatActions';
+import Question from './Question'
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
 
@@ -34,34 +35,14 @@ class QuestionsList extends Component {
 
   render() {
     const { chat, onUserInterested } = this.props;
-    let optionButtons;
     return (
       <div>
         <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
           {chat.questions.list.map(question => (
-            <div key={`q${question.id}`}>
-              <Typist className="inline" startDelay={500}
-                cursor={{ hideWhenDone: !question.id === chat.questions.currentlySelected }}
-                onTypingDone={() => $(optionButtons).transition('swing down')}
-              >
-                <img className="ui avatar image"
-                  src="../images/EmilyTheStrange.png"
-                  alt="Emily the Strange Scikic Logo"
-                />
-                &nbsp;
-                {question.string}
-              </Typist>
-              <br />
-              <div className="ui buttons transition hidden" ref={(node) => optionButtons = node}>
-                {question.options.map((answerOption, i) => (
-                  <button key={`q${question.id}o${i}`} className="ui button"
-                    onClick={e => console.log($(e.target).text())}
-                  >
-                    {answerOption}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <Question questionId={question.id} string={question.string}
+              answerType={question.expectedAnswerType} options={question.options} 
+              currentlySelected={!question.id === chat.questions.currentlySelected}
+            />
           ))}
         </div>
 
