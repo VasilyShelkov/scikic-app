@@ -33,4 +33,15 @@ describe('#chatActions', () => {
 
     expect(actualAction).toEqual(expectedAction);
   });
+
+  it('should create an action to answer a question', () => {
+    const actualAction = actions.answerQuestion(0, 'answer');
+    const expectedAction = {
+      type: actions.ANSWER_QUESTION,
+      questionId: 0,
+      answer: 'answer',
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
 });

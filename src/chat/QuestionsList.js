@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
-import { isUserInterested, fetchQuestion } from './chatActions';
-import Question from './Question'
+import { isUserInterested, fetchQuestion, answerQuestion } from './chatActions';
+import Question from './Question';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
 
@@ -34,7 +34,7 @@ class QuestionsList extends Component {
   }
 
   render() {
-    const { chat, onUserInterested } = this.props;
+    const { chat, onUserInterested, onAnswer } = this.props;
     return (
       <div>
         {
@@ -43,6 +43,7 @@ class QuestionsList extends Component {
               <Question questionId={question.id} string={question.string}
                 answerType={question.expectedAnswerType} options={question.options}
                 currentlySelected={!question.id === chat.questions.currentlySelected}
+                answer={question.answer} onAnswer={(answer) => onAnswer(question.id, answer)}
               />
             ))}
           </div>
@@ -69,6 +70,7 @@ class QuestionsList extends Component {
 QuestionsList.propTypes = {
   chat: React.PropTypes.object,
   onUserInterested: React.PropTypes.func,
+  onAnswer: React.PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({ chat: state.chat });
@@ -80,6 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(isUserInterested(interested));
   },
+  onAnswer: (questionId, answer) => dispatch(answerQuestion(questionId, answer))
 });
 
 

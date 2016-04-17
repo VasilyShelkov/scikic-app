@@ -4,8 +4,8 @@ import chatReducer, { initialState } from './chatReducer';
 import * as actions from './chatActions';
 import { exampleRecievedQuestion } from './../utilities';
 
-describe(chatReducer, () => {
-  let questionId = 1;
+describe('#chatReducer', () => {
+  let questionId = 0;
 
   it('should set interested to action', () => {
     const stateBefore = initialState;
@@ -51,7 +51,7 @@ describe(chatReducer, () => {
           ...stateBefore.questions.list,
           {
             id: questionId,
-            string: exampleRecievedQuestion.question_string,
+            string: exampleRecievedQuestion.question_string.question,
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
@@ -76,7 +76,7 @@ describe(chatReducer, () => {
           ...initialState.questions.list,
           {
             id: questionId,
-            string: exampleRecievedQuestion.question_string,
+            string: exampleRecievedQuestion.question_string.question,
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
@@ -95,7 +95,7 @@ describe(chatReducer, () => {
           ...stateBefore.questions.list,
           {
             id: questionId,
-            string: exampleRecievedQuestion.question_string,
+            string: exampleRecievedQuestion.question_string.question,
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
@@ -110,5 +110,50 @@ describe(chatReducer, () => {
     deepFreeze(action);
 
     expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
-  })
+  });
+
+  it('should answer a question', () => {
+    const stateBefore = {
+      ...initialState,
+      questions: {
+        list: [
+          ...initialState.questions.list,
+          {
+            id: questionId,
+            string: exampleRecievedQuestion.question_string.question,
+            expectedAnswerType: exampleRecievedQuestion.question_string.type,
+            options: exampleRecievedQuestion.question_string.options,
+            extraInfo: exampleRecievedQuestion.question,
+          }
+        ],
+        isFetching: false,
+        currentlySelected: questionId,
+      }
+    };
+    const action = actions.answerQuestion(questionId, 'answer');
+
+    const stateAfter = {
+      ...stateBefore,
+      questions: {
+        list: [
+          ...initialState.questions.list,
+          {
+            id: questionId,
+            string: exampleRecievedQuestion.question_string.question,
+            expectedAnswerType: exampleRecievedQuestion.question_string.type,
+            options: exampleRecievedQuestion.question_string.options,
+            extraInfo: exampleRecievedQuestion.question,
+            answer: 'answer'
+          }
+        ],
+        isFetching: false,
+        currentlySelected: questionId,
+      }
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
 });

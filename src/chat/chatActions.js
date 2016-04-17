@@ -38,3 +38,10 @@ export const fetchQuestion = () =>
       .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions))
       .then(response => response.json())
       .then(nextQuestion => dispatch(receiveNextQuestion(nextQuestion)));
+
+export const ANSWER_QUESTION = 'ANSWER_QUESTION';
+export const answerQuestion = (questionId, answer) => ({
+  type: ANSWER_QUESTION,
+  questionId,
+  answer,
+});
