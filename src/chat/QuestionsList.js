@@ -37,14 +37,16 @@ class QuestionsList extends Component {
     const { chat, onUserInterested } = this.props;
     return (
       <div>
-        <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
-          {chat.questions.list.map(question => (
-            <Question questionId={question.id} string={question.string}
-              answerType={question.expectedAnswerType} options={question.options} 
-              currentlySelected={!question.id === chat.questions.currentlySelected}
-            />
-          ))}
-        </div>
+        {
+          <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
+            {chat.questions.list.map(question => (
+              <Question questionId={question.id} string={question.string}
+                answerType={question.expectedAnswerType} options={question.options}
+                currentlySelected={!question.id === chat.questions.currentlySelected}
+              />
+            ))}
+          </div>
+        }
 
         <div ref={(node) => this.initial = node }>
           <InterestedInitialQuestion interested={chat.interested} onClick={onUserInterested} />
