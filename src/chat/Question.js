@@ -42,13 +42,15 @@ const Question = ({
             {string}
           </Typist>
         </div>
-        <div className="col-xs-1">
-          <div className="circular ui tiny purple icon button" data-title="Skip Question"
-            onClick={() => onSkip()}
-          >
-            <i className="level down icon"></i>
+        { !answer &&
+          <div className="col-xs-1">
+            <div className="circular ui tiny purple icon button" data-title="Skip Question"
+              onClick={() => onSkip()}
+            >
+              <i className="level down icon"></i>
+            </div>
           </div>
-        </div>
+        }
       </div>
 
       <div className="row">

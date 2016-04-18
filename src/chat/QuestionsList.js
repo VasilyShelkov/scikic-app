@@ -49,7 +49,12 @@ class QuestionsList extends Component {
                   currentlySelected={question.id === chat.questions.currentlySelected}
                   skipped={question.skipped} answer={question.answer}
                   onAnswer={(answer) => onAnswer(question.id, answer)}
-                  onSkip={() => onSkip(question.id)}
+                  onSkip={() => {
+                    if (!question.skipped && !question.answer) {
+                      onSkip(question.id, question.skipped);
+                    }
+                  }
+                  }
                   onSelectQuestion={() => {
                     if (question.id !== chat.questions.currentlySelected) {
                       onSelectQuestion(question.id);
@@ -97,7 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(isUserInterested(interested));
   },
   onAnswer: (questionId, answer) => (dispatch(answerQuestion(questionId, answer))),
-  onSkip: questionId => {
+  onSkip: (questionId) => {
     dispatch(skipQuestion(questionId));
     dispatch(fetchQuestion());
   },

@@ -9,23 +9,26 @@ export const TextAnswer = ({ questionId, answer, onAnswer }) => {
         onKeyDown={(e) => {
           // will answer the question when the user clicks enter of the OK button below.
           if (e.keyCode === 13) {
-            if (e.target.value.length > 0) {
+            const newAnswer = e.target.value;
+            if (newAnswer.length > 0 && newAnswer !== answer) {
               onAnswer(e.target.value);
+            } else if (answer) {
+              e.target.value = answer;
             }
           }
         }}
-        onKeyUp={e => {
-          if (e.target.value.length > 0 && $(submit).hasClass('hidden')) {
-            $(submit).transition('swing right');
-          }
-
-          if (e.target.value.length === 0 && $(submit).hasClass('visible')) {
-            $(submit).transition('swing right');
-          }
-        }}
       />
-      <div className="ui labeled button transition hidden" ref={node => submit = node}>
-        <button className={`ui ${answer && 'green'} button`} onClick={() => onAnswer(answerInput.value)}>
+      <div className="ui labeled button" ref={node => submit = node}>
+        <button className={`ui ${answer && 'green'} button`}
+          onClick={() => {
+            const newAnswer = answerInput.value;
+            if (newAnswer.length > 0 && newAnswer !== answer) {
+              onAnswer(newAnswer);
+            } else if (answer) {
+              answerInput.value = answer;
+            }
+          }}
+        >
           {answer && <i className="checkmark icon"></i>}
           Ok
         </button>
