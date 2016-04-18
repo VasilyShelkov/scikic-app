@@ -52,7 +52,12 @@ export class MultipleOptionsAnswer extends Component {
             .addClass('transition hidden');
           $(`#q${this.props.questionId}answer`).removeClass('active visible');
           this.props.onAnswer(value);
-          $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
+
+          if (this.props.answer) {
+            $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
+          } else {
+            $(`#q${this.props.questionId}answer`).dropdown('restore default text')
+          }
         }
       });
     }
