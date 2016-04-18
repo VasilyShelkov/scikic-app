@@ -1,10 +1,15 @@
 import React from 'react';
 import Menu from './Menu';
+import ErrorMessage from './ErrorMessage';
 
 const App = ({ children }) => (
 	<div>
 		<Menu />
 		<div className="container-fluid">
+			<div className="row">
+        <ErrorMessage />
+      </div>
+
 			<div className="row">
 				{children}
 			</div>

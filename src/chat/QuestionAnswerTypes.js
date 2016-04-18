@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 
-export const TextAnswer = ({ questionId, answer, onAnswer }) => {
+export const TextAnswer = ({ questionId, answer, onAnswer, isVisualizing }) => {
   let answerInput, submit;
   const answeredStyle = { border: '1px solid #21BA45' };
   return (
     <div id={`q${questionId}answer`} className="ui fluid action input transition hidden">
       <input type="text" ref={node => answerInput = node} style={answer ? answeredStyle : {}}
         onKeyDown={(e) => {
+          $(answerInput).removeAttr('value');
           // will answer the question when the user clicks enter of the OK button below.
           if (e.keyCode === 13) {
             const newAnswer = e.target.value;
-            if (newAnswer.length > 0 && newAnswer !== answer) {
+            if (newAnswer.length > 0 && newAnswer !== answer && !isVisualizing) {
               onAnswer(e.target.value);
-            } else if (answer) {
+            } else {
+              onAnswer(e.target.value);
               e.target.value = answer;
             }
           }
@@ -50,6 +52,7 @@ export class MultipleOptionsAnswer extends Component {
             .addClass('transition hidden');
           $(`#q${this.props.questionId}answer`).removeClass('active visible');
           this.props.onAnswer(value);
+          $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
         }
       });
     }

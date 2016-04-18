@@ -51,7 +51,7 @@ describe('#chatActions', () => {
       type: actions.START_VISUALIZATION,
     };
 
-    expect(actualAction).toEqual(expectedAction);
+    expect(actualActiomessagen).toEqual(expectedAction);
   });
 
   it('should create an action to signify the end of the visualization', () => {
@@ -78,6 +78,16 @@ describe('#chatActions', () => {
     const expectedAction = {
       type: actions.SELECT_QUESTION,
       questionId: 0,
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
+
+  it('should create an action to display an error', () => {
+    const actualAction = actions.displayErrorMessage('error message');
+    const expectedAction = {
+      type: actions.DISPLAY_ERROR,
+      message: 'error message',
     };
 
     expect(actualAction).toEqual(expectedAction);

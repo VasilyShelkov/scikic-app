@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
 import {
-  isUserInterested, fetchQuestion, answerQuestion, skipQuestion, selectQuestion
+  isUserInterested, fetchQuestion, answerQuestionAndVisualize,
+  skipQuestion, selectQuestion, displayErrorMessage
 } from './chatActions';
 import Question from './Question';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
@@ -37,7 +38,7 @@ class QuestionsList extends Component {
   }
 
   render() {
-    const { chat, onUserInterested, onAnswer, onSkip, onSelectQuestion } = this.props;
+    const { chat, onUserInterested, onAnswer, onSkip, onSelectQuestion, onError } = this.props;
     return (
       <div>
         {
@@ -48,7 +49,14 @@ class QuestionsList extends Component {
                   answerType={question.expectedAnswerType} options={question.options}
                   currentlySelected={question.id === chat.questions.currentlySelected}
                   skipped={question.skipped} answer={question.answer}
-                  onAnswer={(answer) => onAnswer(question.id, answer)}
+                  isVisualizing={chat.isVisualizing}
+                  onAnswer={(answer) => {
+                    if (!chat.isVisualizing) {
+                      onAnswer(question.id, answer);
+                    } else {
+                      onError('Wait for the visualization to finish before changing your answer...');
+                    }
+                  }}
                   onSkip={() => {
                     if (!question.skipped && !question.answer) {
                       onSkip(question.id, question.skipped);
@@ -101,12 +109,13 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(isUserInterested(interested));
   },
-  onAnswer: (questionId, answer) => (dispatch(answerQuestion(questionId, answer))),
+  onAnswer: (questionId, answer) => dispatch(answerQuestionAndVisualize(questionId, answer)),
   onSkip: (questionId) => {
     dispatch(skipQuestion(questionId));
     dispatch(fetchQuestion());
   },
   onSelectQuestion: questionId => dispatch(selectQuestion(questionId)),
+  onError: message => dispatch(displayErrorMessage(message)),
 });
 
 

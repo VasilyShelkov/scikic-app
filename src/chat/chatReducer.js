@@ -2,6 +2,7 @@ import {
   INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION,
   ANSWER_QUESTION, SKIP_QUESTION, SELECT_QUESTION,
   START_VISUALIZATION, FINISH_VISUALIZATION,
+  DISPLAY_ERROR, HIDE_ERROR,
 } from './chatActions';
 
 let questionId = 0;
@@ -12,7 +13,8 @@ export const initialState = {
     isFetching: false,
     currentlySelected: false,
   },
-  isVisualizing: false
+  isVisualizing: false,
+  error: false,
 };
 
 const chatReducer = (state = initialState, action) => {
@@ -75,6 +77,16 @@ const chatReducer = (state = initialState, action) => {
     return {
       ...state,
       isVisualizing: false,
+    };
+  case DISPLAY_ERROR:
+    return {
+      ...state,
+      error: action.message,
+    };
+  case HIDE_ERROR:
+    return {
+      ...state,
+      error: false,
     };
   default:
     return state;

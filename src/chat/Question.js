@@ -3,7 +3,7 @@ import Typist from 'react-typist';
 import { TextAnswer, MultipleOptionsAnswer } from './QuestionAnswerTypes';
 
 const Question = ({
-  questionId, string, answerType, options, currentlySelected, answer, skipped,
+  questionId, string, answerType, options, currentlySelected, answer, skipped, isVisualizing,
   onAnswer, onSkip, onSelectQuestion
 }) => (
   <div key={`q${questionId}`} className="row"
@@ -60,7 +60,9 @@ const Question = ({
               onAnswer={onAnswer}
             />
           :
-            <TextAnswer questionId={questionId} answer={answer} onAnswer={onAnswer} />
+            <TextAnswer questionId={questionId} answer={answer} isVisualizing={isVisualizing}
+              onAnswer={onAnswer}
+            />
         }
       </div>
     </div>

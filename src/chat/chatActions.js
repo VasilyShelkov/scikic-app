@@ -44,7 +44,7 @@ export const answerQuestionAndVisualize = (questionId, answer) =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
-      .then(() => doVisualisation());
+      // .then(() => doVisualisation());
 
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const answerQuestion = (questionId, answer) => ({
@@ -73,4 +73,15 @@ export const SELECT_QUESTION = 'SELECT_QUESTION';
 export const selectQuestion = (questionId) => ({
   type: SELECT_QUESTION,
   questionId,
+});
+
+export const DISPLAY_ERROR = 'DISPLAY_ERROR';
+export const displayErrorMessage = (message) => ({
+  type: DISPLAY_ERROR,
+  message,
+});
+
+export const HIDE_ERROR = 'HIDE_ERROR';
+export const hideError = () => ({
+  type: HIDE_ERROR,
 })
