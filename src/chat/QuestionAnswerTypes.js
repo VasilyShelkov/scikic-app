@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export const TextAnswer = ({ questionId, answer, onAnswer }) => {
-  let answerInput;
+  let answerInput, submit;
   const answeredStyle = { border: '1px solid #21BA45' };
   return (
     <div id={`q${questionId}answer`} className="ui fluid action input transition hidden">
@@ -14,8 +14,17 @@ export const TextAnswer = ({ questionId, answer, onAnswer }) => {
             }
           }
         }}
+        onKeyUp={e => {
+          if (e.target.value.length > 0 && $(submit).hasClass('hidden')) {
+            $(submit).transition('swing right');
+          }
+
+          if (e.target.value.length === 0 && $(submit).hasClass('visible')) {
+            $(submit).transition('swing right');
+          }
+        }}
       />
-      <div className="ui labeled button">
+      <div className="ui labeled button transition hidden" ref={node => submit = node}>
         <button className={`ui ${answer && 'green'} button`} onClick={() => onAnswer(answerInput.value)}>
           {answer && <i className="checkmark icon"></i>}
           Ok
