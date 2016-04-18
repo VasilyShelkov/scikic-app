@@ -47,15 +47,23 @@ export class MultipleOptionsAnswer extends Component {
     if (this.props.options.length > 4) {
       $(`#q${this.props.questionId}answer`).dropdown({
         onChange: (value) => {
+          // bug with when the dropdown already has the transition hidden class before answering questions
           $(`#q${this.props.questionId}answer .menu`)
             .removeClass('transition visible')
             .addClass('transition hidden');
+          // to rectify make the menu transition hidden after changing
+          // and stop the dropdown from being active visible
           $(`#q${this.props.questionId}answer`).removeClass('active visible');
+          // already did try to reinitialize the dropdown in componentDidUpdate lifecycle...
+
           this.props.onAnswer(value);
 
+          // reset the dropdown's text if the answer wasn't changed (ie when visualizing)
           if (this.props.answer) {
             $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
           } else {
+            // or set to default text if an answer hasn't already been selected
+            // ie a different question was answered and still visualizing
             $(`#q${this.props.questionId}answer`).dropdown('restore default text')
           }
         }

@@ -19,8 +19,11 @@ class QuestionsList extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    // initializing the skip question button's tooltip popup
     $('.icon.button').popup();
+    // if the interested state has changed
     if (this.props.chat.interested !== prevProps.chat.interested) {
+      // hide the initial interested question and show the uninterested message
       if (this.props.chat.interested === false) {
         $(this.initial).transition({
           animation: 'slide down',
@@ -28,7 +31,8 @@ class QuestionsList extends Component {
         });
       }
 
-      if (this.props.chat.interested && $(this.questions).is(':hidden')) {
+      // hide the initial interested question and show the questions to ask the user...
+      if (this.props.chat.interested) {
         $(this.initial).transition({
           animation: 'slide down',
           onComplete: () => $(this.questions).transition('slide down')
