@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+const scikicUrl = 'http://dev.scikic.org';
+
 /**
  * Starts a new Promise chain, resolving immediately.
  * @param callback Must return a Promise.
@@ -29,7 +31,7 @@ export const makeGetHeader = () => ({
  * @param body The body of the request, e.g. {'query': 'liverpool'}
  */
 export const fetchPost = (url, body) => (
-  fetch(url, makePostHeader(body))
+  fetch(scikicUrl + url, makePostHeader(body))
 );
 
 /**

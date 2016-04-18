@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideError } from './chat/chatActions';
+import { hideErrorMessage } from './chat/chatActions';
 
 let ErrorMessage = ({ error, onHideError }) => {
   let errorMessage;
@@ -29,7 +29,7 @@ let ErrorMessage = ({ error, onHideError }) => {
 const mapStateToProps = (state) => ({ error: state.chat.error });
 
 const mapDispatchToProps = (dispatch) => ({
-  onHideError: () => dispatch(hideError()),
+  onHideError: () => dispatch(hideErrorMessage()),
 });
 
 

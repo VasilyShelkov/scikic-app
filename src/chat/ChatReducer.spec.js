@@ -255,4 +255,37 @@ describe('#chatReducer', () => {
 
     expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
   });
+
+  it('should display error message', () => {
+    const stateBefore = initialState;
+    const action = actions.displayErrorMessage('error message');
+
+    const stateAfter = {
+      ...stateBefore,
+      error: 'error message',
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
+
+  it('should hide error message', () => {
+    const stateBefore = {
+      ...initialState,
+      error: 'error message',
+    };
+    const action = actions.hideErrorMessage();
+
+    const stateAfter = {
+      ...stateBefore,
+      error: false,
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
 });

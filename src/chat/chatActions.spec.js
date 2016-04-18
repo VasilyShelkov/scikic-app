@@ -51,7 +51,7 @@ describe('#chatActions', () => {
       type: actions.START_VISUALIZATION,
     };
 
-    expect(actualActiomessagen).toEqual(expectedAction);
+    expect(actualAction).toEqual(expectedAction);
   });
 
   it('should create an action to signify the end of the visualization', () => {
@@ -88,6 +88,15 @@ describe('#chatActions', () => {
     const expectedAction = {
       type: actions.DISPLAY_ERROR,
       message: 'error message',
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
+
+  it('should create an action to hide an error', () => {
+    const actualAction = actions.hideErrorMessage();
+    const expectedAction = {
+      type: actions.HIDE_ERROR,
     };
 
     expect(actualAction).toEqual(expectedAction);

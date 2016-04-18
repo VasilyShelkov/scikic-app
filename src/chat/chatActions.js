@@ -1,6 +1,5 @@
 import { newPromiseChain, fetchPost } from './../utilities.js';
-
-const scikicUrl = 'http://dev.scikic.org';
+import { doVisualisation } from './../visualization/visualizationActions';
 
 export const INTERESTED = 'INTERESTED';
 export const isUserInterested = (interested) => ({
@@ -24,7 +23,7 @@ export const fetchQuestion = () =>
           apikey: 'YOUR_API_KEY_HERE',
         });
       })
-      .then(currentQuestions => fetchPost(`${scikicUrl}/question`, currentQuestions))
+      .then(currentQuestions => fetchPost('/question', currentQuestions))
       .then(response => response.json())
       .then(nextQuestion => dispatch(receiveNextQuestion(nextQuestion)));
 
@@ -44,7 +43,7 @@ export const answerQuestionAndVisualize = (questionId, answer) =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
-      // .then(() => doVisualisation());
+      .then(() => doVisualisation(questionId));
 
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const answerQuestion = (questionId, answer) => ({
@@ -82,6 +81,6 @@ export const displayErrorMessage = (message) => ({
 });
 
 export const HIDE_ERROR = 'HIDE_ERROR';
-export const hideError = () => ({
+export const hideErrorMessage = () => ({
   type: HIDE_ERROR,
-})
+});
