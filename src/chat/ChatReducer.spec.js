@@ -55,6 +55,7 @@ describe('#chatReducer', () => {
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
+            skipped: false,
           }
         ],
         isFetching: false,
@@ -80,6 +81,7 @@ describe('#chatReducer', () => {
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
+            skipped: false,
           }
         ],
         isFetching: true,
@@ -99,6 +101,7 @@ describe('#chatReducer', () => {
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
+            skipped: false,
           }
         ],
         isFetching: false,
@@ -124,10 +127,10 @@ describe('#chatReducer', () => {
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
+            skipped: false,
           }
         ],
-        isFetching: false,
-        currentlySelected: questionId,
+        ...initialState.questions
       }
     };
     const action = actions.answerQuestion(questionId, 'answer');
@@ -143,11 +146,56 @@ describe('#chatReducer', () => {
             expectedAnswerType: exampleRecievedQuestion.question_string.type,
             options: exampleRecievedQuestion.question_string.options,
             extraInfo: exampleRecievedQuestion.question,
-            answer: 'answer'
+            answer: 'answer',
+            skipped: false,
           }
         ],
-        isFetching: false,
-        currentlySelected: questionId,
+        ...initialState.questions
+      }
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
+
+  it('should skip a question', () => {
+    const stateBefore = {
+      ...initialState,
+      questions: {
+        list: [
+          ...initialState.questions.list,
+          {
+            id: questionId,
+            string: exampleRecievedQuestion.question_string.question,
+            expectedAnswerType: exampleRecievedQuestion.question_string.type,
+            options: exampleRecievedQuestion.question_string.options,
+            extraInfo: exampleRecievedQuestion.question,
+            skipped: false,
+          }
+        ],
+        ...initialState.questions,
+      }
+    };
+    const action = actions.skipQuestion(questionId);
+
+    const stateAfter = {
+      ...stateBefore,
+      questions: {
+        list: [
+          ...initialState.questions.list,
+          {
+            id: questionId,
+            string: exampleRecievedQuestion.question_string.question,
+            expectedAnswerType: exampleRecievedQuestion.question_string.type,
+            options: exampleRecievedQuestion.question_string.options,
+            extraInfo: exampleRecievedQuestion.question,
+            answer: 'answer',
+            skipped: true,
+          }
+        ],
+        ...initialState.questions,
       }
     };
 

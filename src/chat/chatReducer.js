@@ -1,5 +1,5 @@
 import {
-  INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION, ANSWER_QUESTION
+  INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION, ANSWER_QUESTION, SKIP_QUESTION
 } from './chatActions';
 
 let questionId = 0;
@@ -48,6 +48,14 @@ const chatReducer = (state = initialState, action) => {
         list: state.questions.list.map(question => questionReducer(question, action)),
       }
     };
+  case SKIP_QUESTION:
+    return {
+      ...state,
+      questions: {
+        ...state.questions,
+        list: state.questions.list.map(question => questionReducer(question, action)),
+      }
+    };
   default:
     return state;
   }
@@ -63,12 +71,22 @@ const questionReducer = (state = {}, action) => {
       expectedAnswerType: action.nextQuestion.question_string.type,
       options: action.nextQuestion.question_string.options,
       extraInfo: action.nextQuestion.question,
+      skipped: false,
     };
   case ANSWER_QUESTION:
     if (action.questionId === state.id) {
       return {
         ...state,
         answer: action.answer
+      };
+    }
+
+    return state;
+  case SKIP_QUESTION:
+    if (action.questionId === state.id) {
+      return {
+        ...state,
+        skipped: true,
       };
     }
 

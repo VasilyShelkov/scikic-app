@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
-import { isUserInterested, fetchQuestion, answerQuestion } from './chatActions';
+import { isUserInterested, fetchQuestion, answerQuestion, skipQuestion } from './chatActions';
 import Question from './Question';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
@@ -16,6 +16,7 @@ class QuestionsList extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    $('.icon.button').popup();
     if (this.props.chat.interested !== prevProps.chat.interested) {
       if (this.props.chat.interested === false) {
         $(this.initial).transition({
@@ -34,7 +35,7 @@ class QuestionsList extends Component {
   }
 
   render() {
-    const { chat, onUserInterested, onAnswer } = this.props;
+    const { chat, onUserInterested, onAnswer, onSkip } = this.props;
     return (
       <div>
         {
@@ -43,7 +44,9 @@ class QuestionsList extends Component {
               <Question questionId={question.id} string={question.string}
                 answerType={question.expectedAnswerType} options={question.options}
                 currentlySelected={!question.id === chat.questions.currentlySelected}
-                answer={question.answer} onAnswer={(answer) => onAnswer(question.id, answer)}
+                skipped={question.skipped} answer={question.answer}
+                onAnswer={(answer) => onAnswer(question.id, answer)}
+                onSkip={() => onSkip(question.id)}
               />
             ))}
           </div>
@@ -82,7 +85,11 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(isUserInterested(interested));
   },
-  onAnswer: (questionId, answer) => dispatch(answerQuestion(questionId, answer))
+  onAnswer: (questionId, answer) => dispatch(answerQuestion(questionId, answer)),
+  onSkip: questionId => {
+    dispatch(skipQuestion(questionId));
+    dispatch(fetchQuestion());
+  },
 });
 
 

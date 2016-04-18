@@ -44,4 +44,14 @@ describe('#chatActions', () => {
 
     expect(actualAction).toEqual(expectedAction);
   });
+
+  it('should create an action to skip a question', () => {
+    const actualAction = actions.skipQuestion(0);
+    const expectedAction = {
+      type: actions.SKIP_QUESTION,
+      questionId: 0,
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
 });
