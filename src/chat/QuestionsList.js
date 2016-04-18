@@ -50,8 +50,6 @@ class QuestionsList extends Component {
                 onAnswer={(answer) => onAnswer(question.id, answer)}
                 onSkip={() => onSkip(question.id)}
                 onSelectQuestion={() => {
-                  console.log('qid', question.id)
-                  console.log('currentlySelected', chat.questions.currentlySelected)
                   if (question.id !== chat.questions.currentlySelected) {
                     onSelectQuestion(question.id);
                   }
