@@ -54,4 +54,14 @@ describe('#chatActions', () => {
 
     expect(actualAction).toEqual(expectedAction);
   });
+
+  it('should create an action to select a question', () => {
+    const actualAction = actions.selectQuestion(0);
+    const expectedAction = {
+      type: actions.SELECT_QUESTION,
+      questionId: 0,
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
 });

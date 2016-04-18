@@ -3,13 +3,15 @@ import Typist from 'react-typist';
 import { TextAnswer, MultipleOptionsAnswer } from './QuestionAnswerTypes';
 
 const Question = ({
-  questionId, string, answerType, options, currentlySelected, answer, skipped, onAnswer, onSkip
+  questionId, string, answerType, options, currentlySelected, answer, skipped,
+  onAnswer, onSkip, onSelectQuestion
 }) => (
   <div key={`q${questionId}`} className="row"
     style={{
       border: skipped ? '1px solid #A333C8' : '',
       opacity: currentlySelected ? '1' : '.2'
     }}
+    onClick={() => onSelectQuestion()}
   >
     <div className="container">
       <div className="row">

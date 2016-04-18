@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Typist from 'react-typist';
-import { isUserInterested, fetchQuestion, answerQuestion, skipQuestion } from './chatActions';
+import {
+  isUserInterested, fetchQuestion, answerQuestion, skipQuestion, selectQuestion
+} from './chatActions';
 import Question from './Question';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
 
@@ -35,7 +37,7 @@ class QuestionsList extends Component {
   }
 
   render() {
-    const { chat, onUserInterested, onAnswer, onSkip } = this.props;
+    const { chat, onUserInterested, onAnswer, onSkip, onSelectQuestion } = this.props;
     return (
       <div>
         {
@@ -47,6 +49,13 @@ class QuestionsList extends Component {
                 skipped={question.skipped} answer={question.answer}
                 onAnswer={(answer) => onAnswer(question.id, answer)}
                 onSkip={() => onSkip(question.id)}
+                onSelectQuestion={() => {
+                  console.log('qid', question.id)
+                  console.log('currentlySelected', chat.questions.currentlySelected)
+                  if (question.id !== chat.questions.currentlySelected) {
+                    onSelectQuestion(question.id);
+                  }
+                }}
               />
             ))}
           </div>
@@ -74,6 +83,8 @@ QuestionsList.propTypes = {
   chat: React.PropTypes.object,
   onUserInterested: React.PropTypes.func,
   onAnswer: React.PropTypes.func,
+  onSkip: React.PropTypes.func,
+  onSelectQuestion: React.PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({ chat: state.chat });
@@ -85,11 +96,16 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(isUserInterested(interested));
   },
-  onAnswer: (questionId, answer) => dispatch(answerQuestion(questionId, answer)),
+  onAnswer: (questionId, currentlySelectedQuestion, answer) => {
+    if (questionId === currentlySelectedQuestion) {
+      dispatch(answerQuestion(questionId, answer));
+    }
+  },
   onSkip: questionId => {
     dispatch(skipQuestion(questionId));
     dispatch(fetchQuestion());
   },
+  onSelectQuestion: questionId => dispatch(selectQuestion(questionId)),
 });
 
 

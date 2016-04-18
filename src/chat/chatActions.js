@@ -51,3 +51,9 @@ export const skipQuestion = (questionId) => ({
   type: SKIP_QUESTION,
   questionId,
 });
+
+export const SELECT_QUESTION = 'SELECT_QUESTION';
+export const selectQuestion = (questionId) => ({
+  type: SELECT_QUESTION,
+  questionId,
+})

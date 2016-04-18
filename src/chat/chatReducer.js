@@ -1,5 +1,6 @@
 import {
-  INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION, ANSWER_QUESTION, SKIP_QUESTION
+  INTERESTED, REQUEST_NEXT_QUESTION, RECEIVE_NEXT_QUESTION,
+  ANSWER_QUESTION, SKIP_QUESTION, SELECT_QUESTION
 } from './chatActions';
 
 let questionId = 0;
@@ -54,6 +55,14 @@ const chatReducer = (state = initialState, action) => {
       questions: {
         ...state.questions,
         list: state.questions.list.map(question => questionReducer(question, action)),
+      }
+    };
+  case SELECT_QUESTION:
+    return {
+      ...state,
+      questions: {
+        ...state.questions,
+        currentlySelected: action.questionId,
       }
     };
   default:

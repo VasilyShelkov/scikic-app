@@ -204,4 +204,22 @@ describe('#chatReducer', () => {
 
     expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
   });
+
+  it('should change the currently selection question', () => {
+    const stateBefore = initialState;
+    const action = actions.selectQuestion(0);
+
+    const stateAfter = {
+      ...stateBefore,
+      questions: {
+        ...stateBefore.questions,
+        currentlySelected: 0,
+      }
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
 });
