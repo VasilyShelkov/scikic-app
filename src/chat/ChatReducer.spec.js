@@ -205,7 +205,7 @@ describe('#chatReducer', () => {
     expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
   });
 
-  it('should change the currently selection question', () => {
+  it('should change the currently selected question', () => {
     const stateBefore = initialState;
     const action = actions.selectQuestion(0);
 
@@ -214,7 +214,40 @@ describe('#chatReducer', () => {
       questions: {
         ...stateBefore.questions,
         currentlySelected: 0,
-      }
+      },
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
+
+  it('should signify that it is currently visualizing', () => {
+    const stateBefore = initialState;
+    const action = actions.startVisualization();
+
+    const stateAfter = {
+      ...stateBefore,
+      isVisualizing: true,
+    };
+
+    deepFreeze(stateBefore);
+    deepFreeze(action);
+
+    expect(chatReducer(stateBefore, action)).toEqual(stateAfter);
+  });
+
+  it('should signify that it has finished visualizing', () => {
+    const stateBefore = {
+      ...initialState,
+      isVisualizing: true,
+    };
+    const action = actions.finishVisualization();
+
+    const stateAfter = {
+      ...stateBefore,
+      isVisualizing: false,
     };
 
     deepFreeze(stateBefore);

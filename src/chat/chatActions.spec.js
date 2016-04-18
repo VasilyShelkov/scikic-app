@@ -45,6 +45,24 @@ describe('#chatActions', () => {
     expect(actualAction).toEqual(expectedAction);
   });
 
+  it('should create an action to signify the start of the visualization', () => {
+    const actualAction = actions.startVisualization();
+    const expectedAction = {
+      type: actions.START_VISUALIZATION,
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
+
+  it('should create an action to signify the end of the visualization', () => {
+    const actualAction = actions.finishVisualization();
+    const expectedAction = {
+      type: actions.FINISH_VISUALIZATION,
+    };
+
+    expect(actualAction).toEqual(expectedAction);
+  });
+
   it('should create an action to skip a question', () => {
     const actualAction = actions.skipQuestion(0);
     const expectedAction = {
