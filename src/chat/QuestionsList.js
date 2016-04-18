@@ -18,6 +18,19 @@ class QuestionsList extends Component {
     this.uninterested = null;
   }
 
+  componentDidMount() {
+    if (this.props.chat.interested) {
+      $(this.initial).addClass('transition hidden');
+      $(this.uninterested).addClass('transition hidden');
+    } else if (this.props.chat.interested === false) {
+      $(this.questions).addClass('transition hidden');
+      $(this.initial).addClass('transition hidden');
+    } else {
+      $(this.questions).addClass('transition hidden');
+      $(this.uninterested).addClass('transition hidden');
+    }
+  }
+
   componentDidUpdate(prevProps) {
     // initializing the skip question button's tooltip popup
     $('.icon.button').popup();
@@ -46,7 +59,7 @@ class QuestionsList extends Component {
     return (
       <div>
         {
-          <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
+          <div className="ui segment" ref={(node) => this.questions = node }>
             <div className="container">
               {chat.questions.list.map(question => (
                 <Question questionId={question.id} string={question.string}
@@ -82,7 +95,7 @@ class QuestionsList extends Component {
           <InterestedInitialQuestion interested={chat.interested} onClick={onUserInterested} />
         </div>
 
-        <div className="transition hidden" style={{ width: '100%' }} ref={(node) => this.uninterested = node }>
+        <div style={{ width: '100%' }} ref={(node) => this.uninterested = node }>
           <div className="ui message">
             {chat.interested === false && (
               <Typist className="header" startDelay={1000}>
