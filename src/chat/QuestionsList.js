@@ -19,6 +19,7 @@ class QuestionsList extends Component {
   }
 
   componentDidMount() {
+    // correctly renders the components after changing routes
     if (this.props.chat.interested) {
       $(this.initial).addClass('transition hidden');
       $(this.uninterested).addClass('transition hidden');
