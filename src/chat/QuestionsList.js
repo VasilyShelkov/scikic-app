@@ -42,20 +42,22 @@ class QuestionsList extends Component {
       <div>
         {
           <div className="ui segment transition hidden" ref={(node) => this.questions = node }>
-            {chat.questions.list.map(question => (
-              <Question questionId={question.id} string={question.string}
-                answerType={question.expectedAnswerType} options={question.options}
-                currentlySelected={question.id === chat.questions.currentlySelected}
-                skipped={question.skipped} answer={question.answer}
-                onAnswer={(answer) => onAnswer(question.id, answer)}
-                onSkip={() => onSkip(question.id)}
-                onSelectQuestion={() => {
-                  if (question.id !== chat.questions.currentlySelected) {
-                    onSelectQuestion(question.id);
-                  }
-                }}
-              />
-            ))}
+            <div className="container">
+              {chat.questions.list.map(question => (
+                <Question questionId={question.id} string={question.string}
+                  answerType={question.expectedAnswerType} options={question.options}
+                  currentlySelected={question.id === chat.questions.currentlySelected}
+                  skipped={question.skipped} answer={question.answer}
+                  onAnswer={(answer) => onAnswer(question.id, answer)}
+                  onSkip={() => onSkip(question.id)}
+                  onSelectQuestion={() => {
+                    if (question.id !== chat.questions.currentlySelected) {
+                      onSelectQuestion(question.id);
+                    }
+                  }}
+                />
+              ))}
+            </div>
           </div>
         }
 
@@ -94,11 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
     dispatch(isUserInterested(interested));
   },
-  onAnswer: (questionId, currentlySelectedQuestion, answer) => {
-    if (questionId === currentlySelectedQuestion) {
-      dispatch(answerQuestion(questionId, answer));
-    }
-  },
+  onAnswer: (questionId, answer) => (dispatch(answerQuestion(questionId, answer))),
   onSkip: questionId => {
     dispatch(skipQuestion(questionId));
     dispatch(fetchQuestion());

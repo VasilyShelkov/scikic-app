@@ -86,7 +86,8 @@ const questionReducer = (state = {}, action) => {
     if (action.questionId === state.id) {
       return {
         ...state,
-        answer: action.answer
+        answer: action.answer,
+        skipped: false,
       };
     }
 
