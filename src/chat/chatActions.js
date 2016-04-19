@@ -1,5 +1,5 @@
 import { newPromiseChain, fetchPost } from './../utilities.js';
-import { doVisualisation } from './../visualization/visualizationActions';
+import { doVisualization } from './../visualization/visualizationActions';
 
 export const INTERESTED = 'INTERESTED';
 export const isUserInterested = (interested) => ({
@@ -43,7 +43,7 @@ export const answerQuestionAndVisualize = (questionId, answer) =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
-      .then(() => doVisualisation(questionId));
+      .then(() => dispatch(doVisualization(questionId)));
 
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const answerQuestion = (questionId, answer) => ({

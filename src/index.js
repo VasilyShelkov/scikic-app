@@ -13,9 +13,11 @@ import WhoMadeMe from './infopages/WhoMadeMe';
 import FAQs from './infopages/FAQs';
 
 import chat from './chat/chatReducer';
+import visualization from './visualization/visualizationReducer';
 
 const scikicApp = combineReducers({
-  chat
+  chat,
+  visualization
 });
 
 const middlewares = [thunkMiddleware];
