@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 let Visualization = ({ questionInference, isDoingInference }) => (
-  <div className="ui blurring segment">
-    {questionInference}
-    <div className={`ui ${isDoingInference ? 'active' : ''} dimmer`}>
-      <div className="ui text loader">The Scicik is doing inference...</div>
+  <div className="col-xs-12 col-md-6 col-lg-7 col-xl-8">
+    <div className="ui blurring segment">
+      {JSON.stringify(questionInference)}
+      <div className={`ui ${isDoingInference ? 'active' : ''} dimmer`}>
+        <div className="ui text loader">The Scikic is working its magic...</div>
+      </div>
     </div>
   </div>
 );
@@ -15,11 +17,10 @@ const mapStateToProps = (state) => ({
   isDoingInference: state.visualization.isFetchingQuestionInference,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   onHideError: () => dispatch(hideErrorMessage()),
-// });
+const mapDispatchToProps = (dispatch) => ({});
 
 Visualization = connect(
   mapStateToProps,
+  mapDispatchToProps
 )(Visualization);
 export default Visualization;
