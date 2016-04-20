@@ -39,14 +39,39 @@ const visualizationReducer = (state = initialState, action) => {
 
 const questionInference = (state = {}, action) => {
   switch (action.type) {
-  case RECEIVE_INFERENCE:
+  case RECEIVE_INFERENCE: {
+    let nodes = [];
+    if (action.questionInference.relationships.length > 0) {
+      nodes = action.questionInference.relationships.reduce((nodesThatExist, relationship) => {
+        if (nodesThatExist.indexOf(relationship.parent) === -1) {
+          nodesThatExist.push(relationship.parent);
+        }
+        if (nodesThatExist.indexOf(relationship.child) === -1) {
+          nodesThatExist.push(relationship.child);
+        }
+        return nodesThatExist;
+      }, []);
+    } else {
+      nodes = Object.keys(action.questionInference.features)
+    }
     return {
       ...state,
       facts: action.questionInference.facts,
-      features: action.questionInference.features,
+      features: nodes.map(node => {
+        if (action.questionInference.features[node]) {
+          return {
+            ...action.questionInference.features[node],
+            node,
+          };
+        }
+
+        return false;
+      }).filter(feature => feature !== false),
       textInsights: action.questionInference.insights,
+      nodes,
       relationships: action.questionInference.relationships,
     };
+  }
   default:
     return state;
   }
