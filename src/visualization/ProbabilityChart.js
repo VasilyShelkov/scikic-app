@@ -4,15 +4,15 @@ import d3 from 'd3';
 
 class ProbabilityChart extends Component {
   componentDidMount() {
-    const width = 200;
-    const height = 200;
+    const width = $(this.refs.mountPoint).width();
+    const height = $(window).height() * 0.2;
 
     const xScale = d3.scale.ordinal()
       .domain(this.props.feature.distribution)
       .rangeBands([0, width], 0.1, 0);
 
     const yScale = d3.scale.linear()
-      .domain([0, 1])
+      .domain([0, d3.max(this.props.feature.distribution) * 1.2])
       .range([0, height]);
 
     const init = (selection) => {
@@ -21,45 +21,31 @@ class ProbabilityChart extends Component {
         .enter()
         .append('rect')
         .style('fill', 'green')
-        .attr('x', (d) => xScale(d))
-        .attr('y', (d) => height - yScale(d))
+        .attr('x', d => xScale(d))
+        .attr('y', height)
         .attr('width', xScale.rangeBand())
-        .attr('height', (d) => yScale(d));
+        .attr('height', 0)
+        .transition()
+        .attr('height', d => yScale(d))
+        .attr('y', d => height - yScale(d))
+        .duration(1000)
+        .ease('elastic');
     };
 
-    d3.select(this.refs.mountPoint)
+    const svg = d3.select(this.refs.mountPoint)
       .append('svg')
       .attr('width', width)
-      .attr('height', height)
-      .call(init)
-      // .call(responsivefy);
+      .attr('height', height);
 
-    // const responsivefy = (svg) => {
-    //   // get container + svg aspect ratio
-    //   const container = d3.select(svg.node().parentNode),
-    //     width = parseInt(svg.style('width')),
-    //     height = parseInt(svg.style('height')),
-    //     aspect = width / height;
-    //
-    //   // add viewBox and preserveAspectRatio properties,
-    //   // and call resize so that svg resizes on inital page load
-    //   svg.attr('viewBox', `0 0 ${width} ${height}`)
-    //     .attr('preserveAspectRatio', 'xMinYMid')
-    //     .call(resize);
-    //
-    //   // to register multiple listeners for same event type,
-    //   // you need to add namespace, i.e., 'click.foo'
-    //   // necessary if you call invoke this function for multiple svgs
-    //   // api docs: https://github.com/mbostock/d3/wiki/Selections#on
-    //   d3.select(window).on(`resize.${container.attr('id')}`, resize);
-    //
-    //   // get width of container and resize svg to fit it
-    //   const resize = () => {
-    //     const targetWidth = parseInt(container.style('width'), 10);
-    //     svg.attr('width', targetWidth);
-    //     svg.attr('height', Math.round(targetWidth / aspect));
-    //   };
-    // };
+    svg
+    .append('text')
+    .attr('x', (width / 2))
+    .attr('y', 0 + height * 0.1)
+    .attr('text-anchor', 'middle')
+    .style('font-size', '16px')
+    .text(this.props.feature.node);
+
+    svg.call(init);
   }
 
   render() {
