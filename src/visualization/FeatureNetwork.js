@@ -7,8 +7,8 @@ class FeatureNetwork extends Component {
     const height = $(window).height() * 0.6;
 
     const force = d3.layout.force()
-      .charge(-1000)
-      .linkDistance(200)
+      .charge(-1500)
+      .linkDistance(300)
       .size([width, height])
       .nodes(d3.values(this.props.nodes))
       .links(this.props.links);
@@ -29,17 +29,19 @@ class FeatureNetwork extends Component {
     const node = svg.selectAll('circle')
       .data(force.nodes())
       .enter()
-      .append('circle')
-      .attr('r', 40)
-      .style('stroke', '#FFFFFF')
-      .style('stroke-width', 1.5)
-      .style('fill', 'green')
+      .append('g')
       .call(force.drag);
 
+    node.append('circle')
+      .attr('r', 60)
+      .style('fill', 'green');
+
     node.append('text')
-      .attr('x', 12)
+      .attr('x', 0)
       .attr('dy', '.35em')
-      .text((d) => d);
+      .attr('text-anchor', 'middle')
+      .style('fill', 'white')
+      .text(d => d.name);
 
     force.on('tick', () => {
       link
@@ -48,9 +50,7 @@ class FeatureNetwork extends Component {
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y);
 
-      node
-        .attr('cx', (d) => d.x)
-        .attr('cy', (d) => d.y);
+      node.attr('transform', d => `translate(${d.x}, ${d.y})`);
     });
     force.start();
   }
