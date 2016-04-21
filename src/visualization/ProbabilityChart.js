@@ -4,8 +4,9 @@ import d3 from 'd3';
 
 class ProbabilityChart extends Component {
   componentDidMount() {
-    const width = $(this.refs.mountPoint).width();
-    const height = $(window).height() * 0.2;
+    const margin = { top: 20, right: 30, bottom: 30, left: 47 };
+    const width = $(this.refs.mountPoint).width() - margin.left - margin.right;
+    const height = $(window).height() * 0.2 - margin.top - margin.bottom;
 
     const xScale = d3.scale.ordinal()
       .domain(this.props.feature.distribution)
@@ -13,7 +14,7 @@ class ProbabilityChart extends Component {
 
     const yScale = d3.scale.linear()
       .domain([0, d3.max(this.props.feature.distribution) * 1.2])
-      .range([0, height]);
+      .range([height, 0]);
 
     const init = (selection) => {
       selection.selectAll('rect')
@@ -26,24 +27,34 @@ class ProbabilityChart extends Component {
         .attr('width', xScale.rangeBand())
         .attr('height', 0)
         .transition()
-        .attr('height', d => yScale(d))
-        .attr('y', d => height - yScale(d))
+        .attr('height', d => height - yScale(d))
+        .attr('y', d => yScale(d))
         .duration(1000)
         .ease('elastic');
     };
 
     const svg = d3.select(this.refs.mountPoint)
       .append('svg')
-      .attr('width', width)
-      .attr('height', height);
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-    svg
-    .append('text')
-    .attr('x', (width / 2))
-    .attr('y', 0 + height * 0.1)
-    .attr('text-anchor', 'middle')
-    .style('font-size', '16px')
-    .text(this.props.feature.node);
+    svg.append('text')
+      .attr('x', margin.left + 5)
+      .attr('y', margin.top)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '16px')
+      .text(this.props.feature.node);
+
+    const yAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient('left')
+      .ticks(10, '%');
+
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);
 
     svg.call(init);
   }
