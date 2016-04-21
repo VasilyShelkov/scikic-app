@@ -8,7 +8,7 @@ class FeatureNetwork extends Component {
 
     const force = d3.layout.force()
       .charge(-120)
-      .linkDistance(50)
+      .linkDistance(100)
       .size([width, height])
       .nodes(d3.values(this.props.nodes))
       .links(this.props.links);
