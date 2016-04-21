@@ -16,7 +16,7 @@ const Question = ({
     <div className="container">
       <div className="row">
         <div className="col-xs-11">
-          <Typist className="inline" startDelay={500}
+          <Typist className="inline" startDelay={500} avgTypingDelay={40}
             cursor={{ hideWhenDone: !currentlySelected }}
             onTypingDone={() => $(`#q${questionId}answer`).transition({
               animation: 'swing down',

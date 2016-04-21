@@ -57,17 +57,19 @@ export class MultipleOptionsAnswer extends Component {
           // already did try to reinitialize the dropdown in componentDidUpdate lifecycle...
 
           this.props.onAnswer(value);
-
-          // reset the dropdown's text if the answer wasn't changed (ie when visualizing)
-          if (this.props.answer) {
-            $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
-          } else {
-            // or set to default text if an answer hasn't already been selected
-            // ie a different question was answered and still visualizing
-            $(`#q${this.props.questionId}answer`).dropdown('restore default text')
-          }
         }
       });
+    }
+  }
+
+  componentDidUpdate() {
+    // reset the dropdown's text if the answer wasn't changed (ie when visualizing)
+    if (this.props.answer) {
+      $(`#q${this.props.questionId}answer`).dropdown('set text', this.props.answer);
+    } else {
+      // or set to default text if an answer hasn't already been selected
+      // ie a different question was answered and still visualizing
+      $(`#q${this.props.questionId}answer`).dropdown('restore default text')
     }
   }
 

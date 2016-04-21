@@ -99,7 +99,7 @@ class QuestionsList extends Component {
         <div style={{ width: '100%' }} ref={(node) => this.uninterested = node }>
           <div className="ui message">
             {chat.interested === false && (
-              <Typist className="header" startDelay={1000}>
+              <Typist className="header" startDelay={1000} avgTypingDelay={40}>
                 It is a shame you do not want to try me . . . &nbsp; <br />
                 Thank you for your interest !
               </Typist>

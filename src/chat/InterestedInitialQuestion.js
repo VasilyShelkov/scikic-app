@@ -5,7 +5,7 @@ const InterestedInitialQuestion = ({ onClick }) => {
   let optionButtons;
   return (
     <div className="ui attached message">
-      <Typist className="header" startDelay={1000}
+      <Typist className="header" startDelay={1000} avgTypingDelay={40}
         onTypingDone={() => $(optionButtons).transition('swing down')}
       >
         Interested ? &nbsp;
