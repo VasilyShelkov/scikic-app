@@ -22,13 +22,13 @@ const Question = ({
               animation: 'swing down',
               onComplete: () => {
                 // if it's the dropdown then open it
-                if (options && options.length > 4) {
+                if (options && options.length > 4 && currentlySelected) {
                   $(`#q${questionId}answer`).dropdown('show');
                 }
 
                 // if it's the text input then focus it
                 // so the user can start typing without clicking on it first
-                if (answerType === 'text') {
+                if (answerType === 'text' && currentlySelected) {
                   $(`#q${questionId}answer > input`).focus();
                 }
               }

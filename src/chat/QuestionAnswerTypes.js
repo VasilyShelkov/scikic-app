@@ -69,7 +69,7 @@ export class MultipleOptionsAnswer extends Component {
     } else {
       // or set to default text if an answer hasn't already been selected
       // ie a different question was answered and still visualizing
-      $(`#q${this.props.questionId}answer`).dropdown('restore default text')
+      $(`#q${this.props.questionId}answer`).dropdown('restore default text');
     }
   }
 
