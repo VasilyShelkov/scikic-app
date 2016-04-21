@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ProbabilityChart from './ProbabilityChart';
+import FeatureNetwork from './FeatureNetwork';
 
 let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInference }) => (
   <div className="col-xs-12 col-md-6 col-lg-7 col-xl-8"
@@ -9,16 +10,25 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
     { Object.keys(questionInference).length > 0 &&
       <div className="ui blurring segment">
         <div className="container">
-          {currentQuestionVisualizing !== false ?
-            questionInference[currentQuestionVisualizing].features.map(feature => (
-              <div className="row">
+          <div className="row">
+            {currentQuestionVisualizing !== false ?
+              questionInference[currentQuestionVisualizing].features.map(feature => (
                 <ProbabilityChart feature={feature} />
-              </div>
-            ))
-            :
-            'no results to show'
-          }
+              ))
+              :
+              'no results to show'
+            }
           </div>
+          <div className="row">
+            {currentQuestionVisualizing !== false ?
+              <FeatureNetwork nodes={questionInference[currentQuestionVisualizing].nodes}
+                links={questionInference[currentQuestionVisualizing].relationships}
+              />
+              :
+              'no results to show'
+            }
+          </div>
+        </div>
       </div>
     }
     <div className={`ui ${isDoingInference ? 'active' : ''} dimmer`}>

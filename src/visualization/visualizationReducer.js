@@ -40,24 +40,28 @@ const visualizationReducer = (state = initialState, action) => {
 const questionInference = (state = {}, action) => {
   switch (action.type) {
   case RECEIVE_INFERENCE: {
-    let nodes = [];
+    let nodes = {};
     if (action.questionInference.relationships.length > 0) {
       nodes = action.questionInference.relationships.reduce((nodesThatExist, relationship) => {
-        if (nodesThatExist.indexOf(relationship.parent) === -1) {
-          nodesThatExist.push(relationship.parent);
+        if (!nodesThatExist[relationship.parent]) {
+          nodesThatExist[relationship.parent] = { name: relationship.parent };
         }
-        if (nodesThatExist.indexOf(relationship.child) === -1) {
-          nodesThatExist.push(relationship.child);
+        if (!nodesThatExist[relationship.child]) {
+          nodesThatExist[relationship.child] = { name: relationship.child };
         }
         return nodesThatExist;
-      }, []);
+      }, {});
     } else {
-      nodes = Object.keys(action.questionInference.features)
+      nodes = Object.keys(action.questionInference.features).forEach(
+        feature => {
+          nodes[feature] = { name: feature };
+        }
+      );
     }
     return {
       ...state,
       facts: action.questionInference.facts,
-      features: nodes.map(node => {
+      features: Object.keys(nodes).map(node => {
         if (action.questionInference.features[node]) {
           return {
             ...action.questionInference.features[node],
@@ -69,7 +73,10 @@ const questionInference = (state = {}, action) => {
       }).filter(feature => feature !== false),
       textInsights: action.questionInference.insights,
       nodes,
-      relationships: action.questionInference.relationships,
+      relationships: action.questionInference.relationships.map(relationship => ({
+        source: nodes[relationship.parent],
+        target: nodes[relationship.child]
+      })),
     };
   }
   default:
