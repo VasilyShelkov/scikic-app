@@ -7,8 +7,8 @@ class FeatureNetwork extends Component {
     const height = $(window).height() * 0.6;
 
     const force = d3.layout.force()
-      .charge(-120)
-      .linkDistance(100)
+      .charge(-1000)
+      .linkDistance(200)
       .size([width, height])
       .nodes(d3.values(this.props.nodes))
       .links(this.props.links);
@@ -30,7 +30,7 @@ class FeatureNetwork extends Component {
       .data(force.nodes())
       .enter()
       .append('circle')
-      .attr('r', 20)
+      .attr('r', 40)
       .style('stroke', '#FFFFFF')
       .style('stroke-width', 1.5)
       .style('fill', 'green')

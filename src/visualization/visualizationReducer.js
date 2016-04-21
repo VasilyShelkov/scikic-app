@@ -52,7 +52,7 @@ const questionInference = (state = {}, action) => {
         return nodesThatExist;
       }, {});
     } else if (Object.keys(action.questionInference.features).length > 0) {
-      nodes = Object.keys(action.questionInference.features).forEach(
+      Object.keys(action.questionInference.features).forEach(
         feature => {
           nodes[feature] = { name: feature };
         }
