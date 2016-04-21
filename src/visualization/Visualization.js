@@ -13,7 +13,9 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
           <div className="row">
             {currentQuestionVisualizing !== false ?
               questionInference[currentQuestionVisualizing].features.map(feature => (
-                <ProbabilityChart feature={feature} />
+                <ProbabilityChart feature={feature}
+                  color={questionInference[currentQuestionVisualizing].color}
+                />
               ))
               :
               'no results to show'
@@ -23,6 +25,7 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
             {currentQuestionVisualizing !== false ?
               <FeatureNetwork nodes={questionInference[currentQuestionVisualizing].nodes}
                 links={questionInference[currentQuestionVisualizing].relationships}
+                color={questionInference[currentQuestionVisualizing].color}
               />
               :
               'no results to show'

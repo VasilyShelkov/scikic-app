@@ -34,7 +34,7 @@ class FeatureNetwork extends Component {
 
     node.append('circle')
       .attr('r', 60)
-      .style('fill', 'green');
+      .style('fill', d => d.color);
 
     node.append('text')
       .attr('x', 0)

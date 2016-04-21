@@ -21,7 +21,7 @@ class ProbabilityChart extends Component {
         .data(this.props.feature.distribution)
         .enter()
         .append('rect')
-        .style('fill', 'green')
+        .style('fill', this.props.feature.color)
         .attr('x', d => xScale(d))
         .attr('y', height)
         .attr('width', xScale.rangeBand())

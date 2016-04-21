@@ -1,6 +1,9 @@
+import d3 from 'd3';
 import {
   REQUEST_INFERENCE, RECEIVE_INFERENCE, START_QUESTION_VISUALIZATION
 } from './visualizationActions';
+
+const categoryColors = d3.scale.category20();
 
 export const initialState = {
   questions: {},
@@ -42,12 +45,19 @@ const questionInference = (state = {}, action) => {
   case RECEIVE_INFERENCE: {
     let nodes = {};
     if (action.questionInference.relationships.length > 0) {
+      let colorIndex = 1;
       nodes = action.questionInference.relationships.reduce((nodesThatExist, relationship) => {
         if (!nodesThatExist[relationship.parent]) {
-          nodesThatExist[relationship.parent] = { name: relationship.parent };
+          nodesThatExist[relationship.parent] = {
+            name: relationship.parent,
+            color: categoryColors(colorIndex++)
+          };
         }
         if (!nodesThatExist[relationship.child]) {
-          nodesThatExist[relationship.child] = { name: relationship.child };
+          nodesThatExist[relationship.child] = {
+            name: relationship.child,
+            color: categoryColors(colorIndex++)
+          };
         }
         return nodesThatExist;
       }, {});
@@ -63,11 +73,12 @@ const questionInference = (state = {}, action) => {
     return {
       ...state,
       facts: action.questionInference.facts,
-      features: Object.keys(nodes).map(node => {
+      features: Object.keys(nodes).map((node) => {
         if (action.questionInference.features[node]) {
           return {
             ...action.questionInference.features[node],
-            node,
+            node: node,
+            color: nodes[node].color
           };
         }
 
