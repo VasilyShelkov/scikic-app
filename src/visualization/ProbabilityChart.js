@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Faux from 'react-faux-dom';
 import d3 from 'd3';
 
 class ProbabilityChart extends Component {
@@ -61,7 +60,7 @@ class ProbabilityChart extends Component {
 
   render() {
     return (
-      <div className="col-md-2" ref="mountPoint" />
+      <div className="col-md-3" ref="mountPoint" />
     );
   }
 }

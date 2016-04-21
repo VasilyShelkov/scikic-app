@@ -46,10 +46,5 @@ const mapStateToProps = (state) => ({
   isDoingInference: state.visualization.isFetchingQuestionInference,
 });
 
-const mapDispatchToProps = (dispatch) => ({});
-
-Visualization = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Visualization);
+Visualization = connect(mapStateToProps)(Visualization);
 export default Visualization;
