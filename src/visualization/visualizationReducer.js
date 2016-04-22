@@ -82,8 +82,8 @@ const questionInference = (state = {}, action) => {
         if (feature.node === node) {
           updatedPreviousFeatureNode = true;
           return {
-            ...feature,
             ...action.questionInference.features[node],
+            node,
             color: nodes[node].color,
           };
         }

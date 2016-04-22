@@ -57,7 +57,7 @@ export const doVisualization = (questionId, previousQuestionId) =>
       .then(response => response.json())
       .then(questionInference => {
         let previousQuestionInference = [];
-        if (previousQuestionId) {
+        if (!previousQuestionId === false) {
           previousQuestionInference = getState().visualization.questions[previousQuestionId].features;
         }
         dispatch(receiveInference(
