@@ -58,6 +58,16 @@ class ProbabilityChart extends Component {
     svg.call(init);
   }
 
+  componentDidUpdate() {
+    d3.selectAll('rect')
+      .data(this.props.feature.distribution)
+      .transition()
+      .attr('height', d => height - yScale(d))
+      .attr('y', d => yScale(d))
+      .duration(1000)
+      .ease('elastic');
+  }
+
   render() {
     return (
       <div className="col-md-3" ref="mountPoint" />
