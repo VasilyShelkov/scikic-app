@@ -15,6 +15,8 @@ export const doVisualization = (questionId, previousQuestionId) =>
               answer: question.answer
             };
 
+            // add questionWithAnswerToAdd to
+            // completeQuestions.questionsWithAnswer(ultimately questions_asked)
             completeQuestions = {
               ...completeQuestions,
               questionsWithAnswer: [
@@ -23,10 +25,15 @@ export const doVisualization = (questionId, previousQuestionId) =>
               ]
             };
 
-            if (getState().visualization.questions[questionId]) {
+            // add to facts if it's not the current question that's requested isDoingInference
+            // and it has already been previously processed
+            if (getState().visualization.questions[question.id] && question.id !== questionId) {
               completeQuestions = {
                 ...completeQuestions,
-                facts: getState().visualization.questions[questionId].facts
+                facts: {
+                  ...completeQuestions.facts,
+                  ...getState().visualization.questions[question.id].facts,
+                },
               };
             } else {
               completeQuestions = {
@@ -112,16 +119,21 @@ export const finishQuestionVisualization = (questionId) =>
         // or there's another question that's been answered.
       } while (
         newQuestionId !== lastQuestionId &&
-        !getState().chat.questions.list[newQuestionId].skipped &&
-        !getState().chat.questions.list[newQuestionId].answer
+        (
+          getState().chat.questions.list[newQuestionId].skipped ||
+          !getState().chat.questions.list[newQuestionId].answer
+        )
       );
-      // if the final doesn't have an answer, then select it for the user
-      dispatch(finishVisualization());
-      if (!getState().chat.questions.list[lastQuestionId].skipped) {
-        dispatch(selectQuestion(lastQuestionId));
-      } else {
-        // otherwise fetch a new question
-        dispatch(fetchQuestion());
+
+      if (newQuestionId === lastQuestionId) {
+        // if the final doesn't have an answer, then select it for the user
+        dispatch(finishVisualization());
+        if (!getState().chat.questions.list[lastQuestionId].skipped) {
+          dispatch(selectQuestion(lastQuestionId));
+        } else {
+          // otherwise fetch a new question
+          dispatch(fetchQuestion());
+        }
       }
     }
   };
