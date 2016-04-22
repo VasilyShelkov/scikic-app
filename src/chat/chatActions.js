@@ -39,11 +39,11 @@ export const receiveNextQuestion = (nextQuestion) => ({
 });
 
 export const answerQuestionAndVisualize = (questionId, answer) =>
-  dispatch =>
+  (dispatch, getState) =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
-      .then(() => dispatch(doVisualization(questionId)));
+      .then(() => dispatch(doVisualization(questionId, getState().visualization.questionVisualizing)));
 
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const answerQuestion = (questionId, answer) => ({

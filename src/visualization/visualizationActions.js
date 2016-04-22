@@ -1,7 +1,7 @@
 import { newPromiseChain, fetchPost } from './../utilities';
 import { finishVisualization, fetchQuestion, selectQuestion } from './../chat/chatActions';
 
-export const doVisualization = (questionId) =>
+export const doVisualization = (questionId, previousQuestionId) =>
   (dispatch, getState) =>
     newPromiseChain()
       .then(() => dispatch(requestInference(questionId)))
@@ -55,7 +55,17 @@ export const doVisualization = (questionId) =>
       })
       .then(currentQuestionsWithAnswers => fetchPost('/inference', currentQuestionsWithAnswers))
       .then(response => response.json())
-      .then(questionInference => dispatch(receiveInference(questionId, questionInference)))
+      .then(questionInference => {
+        let previousQuestionInference = [];
+        if (previousQuestionId) {
+          previousQuestionInference = getState().visualization.questions[previousQuestionId].features;
+        }
+        dispatch(receiveInference(
+          questionId,
+          questionInference,
+          previousQuestionInference
+        ));
+      })
       .then(() => dispatch(startQuestionVisualization(questionId)))
       .then(() => dispatch(finishQuestionVisualization(questionId)));
 
@@ -66,10 +76,11 @@ export const requestInference = (questionId) => ({
 });
 
 export const RECEIVE_INFERENCE = 'RECEIVE_INFERENCE';
-export const receiveInference = (questionId, questionInference) => ({
+export const receiveInference = (questionId, questionInference, previousQuestionInference) => ({
   type: RECEIVE_INFERENCE,
   questionId,
   questionInference,
+  previousQuestionInference,
 });
 
 export const START_QUESTION_VISUALIZATION = 'START_QUESTION_VISUALIZATION';
@@ -94,7 +105,7 @@ export const finishQuestionVisualization = (questionId) =>
         dispatch(selectQuestion(newQuestionId));
         // if the question has an answer do a new visualization
         if (getState().chat.questions.list[newQuestionId].answer) {
-          dispatch(doVisualization(newQuestionId));
+          dispatch(doVisualization(newQuestionId, questionId));
         }
         // keep looping until either got to the end of the questions asked
         // there is a question that isn't skipped

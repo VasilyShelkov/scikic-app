@@ -73,20 +73,44 @@ const questionInference = (state = {}, action) => {
     } else {
       nodes = {};
     }
-    return {
-      ...state,
-      facts: action.questionInference.facts,
-      features: Object.keys(nodes).map((node) => {
-        if (action.questionInference.features[node]) {
+
+    const newFeatures = Object.keys(nodes).reduce((features, node) => {
+      let updatedPreviousFeatureNode = false;
+
+      // gets an updated features array if the node was created in a previous inference
+      const updatedFeatures = features.map(feature => {
+        if (feature.node === node) {
+          updatedPreviousFeatureNode = true;
           return {
             ...action.questionInference.features[node],
-            node,
-            color: nodes[node].color
+            ...feature,
+            color: nodes[node].color,
           };
         }
 
-        return false;
-      }).filter(feature => feature !== false),
+        return feature;
+      });
+
+      // If there was a feature updated return the updatedFeatures
+      if (updatedPreviousFeatureNode) {
+        return updatedFeatures;
+      } else if (action.questionInference.features[node]) {
+        // otherwise check if that node exists in the new question inference's features
+        // and add that to the end of the new features
+        features.push({
+          ...action.questionInference.features[node],
+          node,
+          color: nodes[node].color
+        });
+      }
+
+      return features;
+    }, action.previousQuestionInference);
+
+    return {
+      ...state,
+      facts: action.questionInference.facts,
+      features: newFeatures,
       textInsights: action.questionInference.insights,
       nodes,
       relationships: action.questionInference.relationships.map(relationship => ({
