@@ -18,7 +18,7 @@ const visualizationReducer = (state = initialState, action) => {
       ...state,
       isFetchingQuestionInference: true,
     };
-  case RECEIVE_INFERENCE:
+  case RECEIVE_INFERENCE: {
     return {
       ...state,
       questions: {
@@ -30,6 +30,7 @@ const visualizationReducer = (state = initialState, action) => {
       },
       isFetchingQuestionInference: false,
     };
+  }
   case START_QUESTION_VISUALIZATION:
     return {
       ...state,
@@ -74,6 +75,8 @@ const questionInference = (state = {}, action) => {
       nodes = {};
     }
 
+    const previousQuestionAskedFeatures = action.previousQuestionInference;
+
     const newFeatures = Object.keys(nodes).reduce((features, node) => {
       let updatedPreviousFeatureNode = false;
 
@@ -97,15 +100,18 @@ const questionInference = (state = {}, action) => {
       } else if (action.questionInference.features[node]) {
         // otherwise check if that node exists in the new question inference's features
         // and add that to the end of the new features
-        features.push({
-          ...action.questionInference.features[node],
-          node,
-          color: nodes[node].color
-        });
+        return [
+          ...features,
+          {
+            ...action.questionInference.features[node],
+            node,
+            color: nodes[node].color
+          }
+        ];
       }
 
-      return features;
-    }, action.previousQuestionInference);
+      return [...features];
+    }, previousQuestionAskedFeatures);
 
     return {
       ...state,
