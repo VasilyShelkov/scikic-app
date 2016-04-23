@@ -101,7 +101,7 @@ export const exampleRecievedInference = {
   },
   relationships: [{
     parent: 'factor_gender',
-    child: 'name'
+    child: 'bg'
   }, {
     parent: 'factor_age',
     child: 'name'
@@ -151,3 +151,14 @@ export const exampleRecievedInference = {
     uscensus_debug_languages: '[[211, 43, 14, 0, 13, 27, 0, 0, 0, 74, 0, 0, 0, 0, 5, 13, 0, 283, 15, 87, 0, 0, 8, 0, 7, 13, 0, 0, 24, 0, 10]]'
   }
 };
+
+export const examplePreviousInferenceFeatures = [{
+  distribution: [1],
+  quartiles: {
+    upper: 0,
+    lower: 0,
+    mean: 0,
+  },
+  node: 'factor_gender',
+  color: '#1f77b4',
+}];

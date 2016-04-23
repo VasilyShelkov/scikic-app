@@ -2,7 +2,8 @@ import expect from 'expect';
 import deepFreeze from 'deep-freeze';
 import visualizationReducer, { initialState } from './visualizationReducer';
 import * as actions from './visualizationActions';
-import { exampleRecievedInference } from './../utilities';
+import { exampleRecievedInference, examplePreviousInferenceFeatures } from './../utilities';
+import d3 from 'd3';
 
 describe('#visualizationReducer', () => {
   it('should request an inference for a question', () => {
@@ -21,8 +22,10 @@ describe('#visualizationReducer', () => {
   });
 
   it('should recieve an inference for a question', () => {
+    const categoryColors = d3.scale.category20();
+
     const stateBefore = initialState;
-    const action = actions.receiveInference(0, exampleRecievedInference);
+    const action = actions.receiveInference(0, exampleRecievedInference, examplePreviousInferenceFeatures);
 
     const stateAfter = {
       ...stateBefore,
@@ -30,9 +33,69 @@ describe('#visualizationReducer', () => {
         ...stateBefore.questions,
         0: {
           facts: exampleRecievedInference.facts,
-          features: exampleRecievedInference.features,
+          features: [{
+            distribution: [0.5031111111111111, 0.4968888888888889],
+            quartiles: { upper: 1, lower: 0, mean: 0.4968888888888889 },
+            node: 'factor_gender',
+            color: categoryColors(3)
+          }, {
+            distribution:[0, 0.09155555555555556, 0, 0.7893333333333333, 0.11911111111111111],
+            quartiles: { upper: 3, lower: 3, mean: 2.936 },
+            node: 'bg',
+            color: categoryColors(2),
+          }, {
+            distribution: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            quartiles: { upper: 33, lower: 33, mean: 33 },
+            node: 'factor_age',
+            color: categoryColors(1),
+          }],
           textInsights: exampleRecievedInference.insights,
-          relationships: exampleRecievedInference.relationships,
+          nodes: {
+            factor_gender: {
+              name: 'factor_gender',
+              color: categoryColors(3)
+            },
+            factor_age: {
+              name: 'factor_age',
+              color: categoryColors(1),
+            },
+            bg: {
+              name: 'bg',
+              color: categoryColors(2),
+            },
+            name: {
+              name: 'name',
+              color: categoryColors(4),
+            },
+          },
+          relationships: [{
+            source: {
+              name: 'factor_gender',
+              color: categoryColors(3)
+            },
+            target: {
+              name: 'bg',
+              color: categoryColors(2),
+            }
+          }, {
+            source: {
+              name: 'factor_age',
+              color: categoryColors(1),
+            },
+            target: {
+              name: 'name',
+              color: categoryColors(4),
+            },
+          }, {
+            source: {
+              name: 'factor_age',
+              color: categoryColors(1),
+            },
+            target: {
+              name: 'bg',
+              color: categoryColors(2),
+            }
+          }],
         }
       },
       isFetchingQuestionInference: false,

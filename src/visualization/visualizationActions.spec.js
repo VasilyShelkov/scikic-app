@@ -1,6 +1,6 @@
 import expect from 'expect';
 import * as actions from './visualizationActions';
-import { exampleRecievedInference } from './../utilities';
+import { exampleRecievedInference, examplePreviousInferenceFeatures } from './../utilities';
 
 describe('#visualizationActions', () => {
   it('should create an action to request an inference', () => {
@@ -14,11 +14,12 @@ describe('#visualizationActions', () => {
   });
 
   it('should create an action to recieve an inference', () => {
-    const actualAction = actions.receiveInference(0, exampleRecievedInference);
+    const actualAction = actions.receiveInference(0, exampleRecievedInference, examplePreviousInferenceFeatures);
     const expectedAction = {
       type: actions.RECEIVE_INFERENCE,
       questionId: 0,
       questionInference: exampleRecievedInference,
+      previousQuestionInference: examplePreviousInferenceFeatures,
     };
 
     expect(actualAction).toEqual(expectedAction);
