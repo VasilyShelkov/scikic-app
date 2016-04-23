@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import d3 from 'd3';
 import ProbabilityChart from './ProbabilityChart';
 import FeatureNetwork from './FeatureNetwork';
 
@@ -28,6 +29,7 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
               <FeatureNetwork nodes={questionInference[currentQuestionVisualizing].nodes}
                 links={questionInference[currentQuestionVisualizing].relationships}
                 color={questionInference[currentQuestionVisualizing].color}
+                force={d3.layout.force().charge(-1500).linkDistance(300)}
               />
               :
               'no results to show'
