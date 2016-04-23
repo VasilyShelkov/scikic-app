@@ -65,7 +65,7 @@ export const doVisualization = (questionId, previousQuestionId) =>
       .then(questionInference => {
         let previousQuestionInference = [];
         // previousQuestionId is false when there's no previous questions but can be 0
-        if (!previousQuestionId === false && previousQuestionId >= 0) {
+        if (previousQuestionId !== false && previousQuestionId >= 0) {
           previousQuestionInference = getState().visualization.questions[previousQuestionId].features;
         }
         dispatch(receiveInference(

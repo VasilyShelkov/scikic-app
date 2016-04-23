@@ -65,24 +65,24 @@ class FeatureNetwork extends Component {
     const network = d3.select(this.refs.mountPoint).select('svg');
 
     const link = network.selectAll('line')
-      .data(force.links())
-      .enter()
-      .append('line')
+      .data(force.links());
+
+    link.enter().insert('line')
       .style('stroke', '#999999')
       .style('stroke-opacity', 0.6)
       .style('stroke-width', (d) => Math.sqrt(d.value));
 
-    const node = network.selectAll('circle')
-      .data(force.nodes())
-      .enter()
-      .append('g')
+    const node = network.selectAll('g')
+      .data(force.nodes());
+
+    const nodeEnter = node.enter().append('g')
       .call(force.drag);
 
-    node.append('circle')
+    nodeEnter.append('circle')
       .attr('r', 60)
       .style('fill', d => d.color);
 
-    node.append('text')
+    nodeEnter.append('text')
       .attr('x', 0)
       .attr('dy', '.35em')
       .attr('text-anchor', 'middle')
