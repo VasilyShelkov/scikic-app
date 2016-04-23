@@ -75,8 +75,6 @@ const questionInference = (state = {}, action) => {
       nodes = {};
     }
 
-    const previousQuestionAskedFeatures = action.previousQuestionInference;
-
     const newFeatures = Object.keys(nodes).reduce((features, node) => {
       let updatedPreviousFeatureNode = false;
 
@@ -111,7 +109,7 @@ const questionInference = (state = {}, action) => {
       }
 
       return [...features];
-    }, previousQuestionAskedFeatures);
+    }, action.previousQuestionInference);
 
     return {
       ...state,
