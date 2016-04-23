@@ -16,18 +16,35 @@ class FeatureNetwork extends Component {
       .attr('width', width)
       .attr('height', height);
 
-    const link = svg.selectAll('line')
+    svg.append('svg:defs').selectAll('marker')
+      .data(['end'])
+      .enter().append('svg:marker')
+      .attr('id', String)
+      .attr('viewBox', '0 -5 10 10')
+      .attr('refX', 55)
+      .attr('refY', -6)
+      .attr('markerWidth', 13)
+      .attr('markerHeight', 13)
+      .attr('orient', 'auto')
+      .append('svg:path')
+      .attr('d', 'M0,-5L10,0L0,5');
+
+    const path = svg.append('g').attr('class', 'path')
+      .selectAll('path')
       .data(force.links())
       .enter()
-      .append('line')
+      .append('path')
       .style('stroke', '#999999')
       .style('stroke-opacity', 0.6)
-      .style('stroke-width', (d) => Math.sqrt(d.value));
+      .style('stroke-width', (d) => Math.sqrt(d.value))
+      .style('fill', 'none')
+      .attr('marker-end', 'url(#end)');
 
-    const node = svg.selectAll('circle')
+    const node = svg.selectAll('g.node')
       .data(force.nodes())
       .enter()
       .append('g')
+      .attr('class', 'node')
       .call(force.drag);
 
     node.append('circle')
@@ -42,11 +59,12 @@ class FeatureNetwork extends Component {
       .text(d => d.name);
 
     force.on('tick', () => {
-      link
-        .attr('x1', (d) => d.source.x)
-        .attr('y1', (d) => d.source.y)
-        .attr('x2', (d) => d.target.x)
-        .attr('y2', (d) => d.target.y);
+      path.attr('d', d => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
       node.attr('transform', d => `translate(${d.x}, ${d.y})`);
     });
@@ -64,18 +82,21 @@ class FeatureNetwork extends Component {
 
     const network = d3.select(this.refs.mountPoint).select('svg');
 
-    const link = network.selectAll('line')
+    const path = network.select('g.path').selectAll('path')
       .data(force.links());
 
-    link.enter().insert('line')
+    path.enter().append('path')
       .style('stroke', '#999999')
       .style('stroke-opacity', 0.6)
-      .style('stroke-width', (d) => Math.sqrt(d.value));
+      .style('stroke-width', (d) => Math.sqrt(d.value))
+      .style('fill', 'none')
+      .attr('marker-end', 'url(#end)');
 
-    const node = network.selectAll('g')
+    const node = network.selectAll('g.node')
       .data(force.nodes());
 
     const nodeEnter = node.enter().append('g')
+      .attr('class', 'node')
       .call(force.drag);
 
     nodeEnter.append('circle')
@@ -89,12 +110,15 @@ class FeatureNetwork extends Component {
       .style('fill', 'white')
       .text(d => d.name);
 
+    node.exit().remove();
+
     force.on('tick', () => {
-      link
-        .attr('x1', (d) => d.source.x)
-        .attr('y1', (d) => d.source.y)
-        .attr('x2', (d) => d.target.x)
-        .attr('y2', (d) => d.target.y);
+      path.attr('d', d => {
+        const dx = d.target.x - d.source.x;
+        const dy = d.target.y - d.source.y;
+        const dr = Math.sqrt(dx * dx + dy * dy);
+        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+      });
 
       node.attr('transform', d => `translate(${d.x}, ${d.y})`);
     });
