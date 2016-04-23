@@ -3,9 +3,9 @@ import d3 from 'd3';
 
 class ProbabilityChart extends Component {
   componentDidMount() {
-    const margin = { top: 20, right: 30, bottom: 30, left: 47 };
+    const margin = this.props.margin;
     const width = $(this.refs.mountPoint).width() - margin.left - margin.right;
-    const height = $(window).height() * 0.2 - margin.top - margin.bottom;
+    const height = this.props.height - margin.top - margin.bottom;
 
     const xScale = d3.scale.ordinal()
       .domain(this.props.feature.distribution)
@@ -59,13 +59,41 @@ class ProbabilityChart extends Component {
   }
 
   componentDidUpdate() {
-    d3.selectAll('rect')
+    const margin = this.props.margin;
+    const height = this.props.height - margin.top - margin.bottom;
+
+    const yScale = d3.scale.linear()
+      .domain([0, d3.max(this.props.feature.distribution) * 1.2])
+      .range([height, 0]);
+
+    const updatedYAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient('left')
+      .ticks(10, '%');
+
+    d3.select(this.refs.mountPoint)
+      .selectAll('g.y.axis')
+      .call(updatedYAxis);
+
+    d3.select(this.refs.mountPoint)
+      .selectAll('rect')
+      .data(this.props.feature.distribution)
+      .exit()
+      .transition()
+      .attr('height', 0)
+      .attr('y', d => yScale(d))
+      .duration(3000)
+      .ease('circle')
+      .each('end', function () { d3.select(this).remove(); });
+
+    d3.select(this.refs.mountPoint)
+      .selectAll('rect')
       .data(this.props.feature.distribution)
       .transition()
       .attr('height', d => height - yScale(d))
       .attr('y', d => yScale(d))
-      .duration(1000)
-      .ease('elastic');
+      .duration(3000)
+      .ease('circle');
   }
 
   render() {

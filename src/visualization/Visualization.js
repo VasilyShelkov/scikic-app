@@ -15,6 +15,8 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
               questionInference[currentQuestionVisualizing].features.map(feature => (
                 <ProbabilityChart feature={feature}
                   color={questionInference[currentQuestionVisualizing].color}
+                  height={$(window).height() * 0.2}
+                  margin={{ top: 20, right: 30, bottom: 30, left: 47 }}
                 />
               ))
               :
