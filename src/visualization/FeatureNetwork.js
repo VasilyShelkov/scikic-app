@@ -60,6 +60,8 @@ class FeatureNetwork extends Component {
       .style('fill', 'none')
       .attr('marker-end', 'url(#end)');
 
+    path.exit().remove();
+
     const node = network.select('svg').selectAll('g.node')
       .data(force.nodes(), d => d.name);
 
