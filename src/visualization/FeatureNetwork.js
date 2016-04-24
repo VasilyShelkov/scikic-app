@@ -7,9 +7,7 @@ class FeatureNetwork extends Component {
     const height = $(window).height() * 0.6;
 
     const force = this.props.force
-      .size([width, height])
-      .nodes(d3.values(this.props.nodes))
-      .links(this.props.links);
+      .size([width, height]);
 
     const svg = d3.select(this.refs.mountPoint)
       .append('svg')
@@ -29,45 +27,10 @@ class FeatureNetwork extends Component {
       .append('svg:path')
       .attr('d', 'M0,-5L10,0L0,5');
 
-    const path = svg.append('g').attr('class', 'path')
-      .selectAll('path')
-      .data(force.links())
-      .enter()
-      .append('path')
-      .style('stroke', '#999999')
-      .style('stroke-opacity', 0.6)
-      .style('stroke-width', (d) => Math.sqrt(d.value))
-      .style('fill', 'none')
-      .attr('marker-end', 'url(#end)');
+    svg.append('g').attr('class', 'paths');
 
-    const node = svg.selectAll('g.node')
-      .data(force.nodes())
-      .enter()
-      .append('g')
-      .attr('class', 'node')
-      .call(force.drag);
+    this.updateNetwork(force);
 
-    node.append('circle')
-      .attr('r', 60)
-      .style('fill', d => d.color);
-
-    node.append('text')
-      .attr('x', 0)
-      .attr('dy', '.35em')
-      .attr('text-anchor', 'middle')
-      .style('fill', 'white')
-      .text(d => d.name);
-
-    force.on('tick', () => {
-      path.attr('d', d => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-      });
-
-      node.attr('transform', d => `translate(${d.x}, ${d.y})`);
-    });
     force.start();
   }
 
@@ -75,25 +38,30 @@ class FeatureNetwork extends Component {
     const width = $(this.refs.mountPoint).width();
     const height = $(window).height() * 0.6;
 
-    const force = this.props.force
-      .size([width, height])
-      .nodes(d3.values(this.props.nodes))
-      .links(this.props.links);
+    const force = this.props.force.size([width, height]);
 
-    const network = d3.select(this.refs.mountPoint).select('svg');
+    this.updateNetwork(force);
 
-    const path = network.select('g.path').selectAll('path')
-      .data(force.links());
+    force.start();
+  }
 
-    path.enter().append('path')
+  updateNetwork(force) {
+    const network = d3.select(this.refs.mountPoint);
+
+    const path = network.select('g.paths')
+      .selectAll('path')
+      .data(force.links(), d => `${d.source.name}-${d.target.name}`);
+
+    path.enter()
+      .append('path')
       .style('stroke', '#999999')
       .style('stroke-opacity', 0.6)
-      .style('stroke-width', (d) => Math.sqrt(d.value))
+      .style('stroke-width', d => Math.sqrt(d.value))
       .style('fill', 'none')
       .attr('marker-end', 'url(#end)');
 
-    const node = network.selectAll('g.node')
-      .data(force.nodes());
+    const node = network.select('svg').selectAll('g.node')
+      .data(force.nodes(), d => d.name);
 
     const nodeEnter = node.enter().append('g')
       .attr('class', 'node')
@@ -111,18 +79,6 @@ class FeatureNetwork extends Component {
       .text(d => d.name);
 
     node.exit().remove();
-
-    force.on('tick', () => {
-      path.attr('d', d => {
-        const dx = d.target.x - d.source.x;
-        const dy = d.target.y - d.source.y;
-        const dr = Math.sqrt(dx * dx + dy * dy);
-        return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
-      });
-
-      node.attr('transform', d => `translate(${d.x}, ${d.y})`);
-    });
-    force.start();
   }
 
   render() {

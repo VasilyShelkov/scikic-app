@@ -26,10 +26,21 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
           </div>
           <div className="row">
             {currentQuestionVisualizing !== false ?
-              <FeatureNetwork nodes={questionInference[currentQuestionVisualizing].nodes}
-                links={questionInference[currentQuestionVisualizing].relationships}
-                color={questionInference[currentQuestionVisualizing].color}
-                force={d3.layout.force().charge(-1500).linkDistance(300)}
+              <FeatureNetwork force={
+                d3.layout.force().charge(-1500).linkDistance(300)
+                .nodes(d3.values(questionInference[currentQuestionVisualizing].nodes))
+                .links(questionInference[currentQuestionVisualizing].relationships)
+                .on('tick', () => {
+                  d3.select('g.paths').selectAll('path').attr('d', d => {
+                    const dx = d.target.x - d.source.x;
+                    const dy = d.target.y - d.source.y;
+                    const dr = Math.sqrt(dx * dx + dy * dy);
+                    return `M${d.source.x},${d.source.y}A${dr},${dr} 0 0,1 ${d.target.x},${d.target.y}`;
+                  });
+
+                  d3.selectAll('g.node').attr('transform', d => `translate(${d.x}, ${d.y})`);
+                })
+              }
               />
               :
               'no results to show'
