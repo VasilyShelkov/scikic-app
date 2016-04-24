@@ -63,10 +63,13 @@ export const doVisualization = (questionId, previousQuestionId) =>
       .then(currentQuestionsWithAnswers => fetchPost('/inference', currentQuestionsWithAnswers))
       .then(response => response.json())
       .then(questionInference => {
-        let previousQuestionInference = [];
+        let previousQuestionInference = {
+          features: [],
+          nodes: {}
+        };
         // previousQuestionId is false when there's no previous questions but can be 0
         if (previousQuestionId !== false && previousQuestionId >= 0) {
-          previousQuestionInference = getState().visualization.questions[previousQuestionId].features;
+          previousQuestionInference = getState().visualization.questions[previousQuestionId];
         }
         dispatch(receiveInference(
           questionId,

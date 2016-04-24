@@ -18,11 +18,14 @@ const ScikicProfile = () => (
 				</div>
 			</div>
 			<div className="extra content">
-				Data will only be stored if you want to help Scikic and
-				the University of Sheffield in the future.
-				At the end you can choose to delete it.
+				Data is not stored on any questions that you answer.
 			</div>
 		</div>
 );
 
 export default ScikicProfile;
+
+
+// Data will only be stored if you want to help Scikic and
+// the University of Sheffield in the future.
+// At the end you can choose to delete it.

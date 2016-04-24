@@ -45,7 +45,7 @@ const questionInference = (state = {}, action) => {
   switch (action.type) {
   case RECEIVE_INFERENCE: {
     let nodes = {};
-    let colorIndex = 1;
+    let colorIndex = Object.keys(action.previousQuestionInference.nodes).length + 1;
     if (action.questionInference.relationships.length > 0) {
       nodes = action.questionInference.relationships.reduce((nodesThatExist, relationship) => {
         if (!nodesThatExist[relationship.parent]) {
@@ -61,7 +61,7 @@ const questionInference = (state = {}, action) => {
           };
         }
         return nodesThatExist;
-      }, {});
+      }, action.previousQuestionInference.nodes);
     } else if (Object.keys(action.questionInference.features).length > 0) {
       Object.keys(action.questionInference.features).forEach(
         feature => {
@@ -109,7 +109,7 @@ const questionInference = (state = {}, action) => {
       }
 
       return [...features];
-    }, action.previousQuestionInference);
+    }, action.previousQuestionInference.features);
 
     return {
       ...state,
