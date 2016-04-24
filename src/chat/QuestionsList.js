@@ -72,7 +72,7 @@ class QuestionsList extends Component {
                     if (!chat.isVisualizing) {
                       onAnswer(question.id, answer);
                     } else {
-                      onError('Wait for the visualization to finish before changing your answer...');
+                      onError('Wait for the visualization to finish before editing your answer...');
                     }
                   }}
                   onSkip={() => {
@@ -82,8 +82,12 @@ class QuestionsList extends Component {
                   }
                   }
                   onSelectQuestion={() => {
-                    if (question.id !== chat.questions.currentlySelected) {
-                      onSelectQuestion(question.id);
+                    if (!chat.isVisualizing) {
+                      if (question.id !== chat.questions.currentlySelected) {
+                        onSelectQuestion(question.id);
+                      }
+                    } else {
+                      onError('Wait for the visualization to finish before selecting a different question');
                     }
                   }}
                 />
