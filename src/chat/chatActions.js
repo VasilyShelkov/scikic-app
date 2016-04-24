@@ -1,5 +1,7 @@
-import { newPromiseChain, fetchPost } from './../utilities.js';
-import { doVisualization } from './../visualization/visualizationActions';
+import { newPromiseChain, fetchPost, getPreviousQuestionId } from './../utilities.js';
+import {
+  doVisualization, selectQuestionToVisualize
+} from './../visualization/visualizationActions';
 
 export const INTERESTED = 'INTERESTED';
 export const isUserInterested = (interested) => ({
@@ -39,7 +41,7 @@ export const receiveNextQuestion = (nextQuestion) => ({
 });
 
 export const answerQuestionAndVisualize = (questionId, answer) =>
-  (dispatch, getState) =>
+  dispatch =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
@@ -67,6 +69,15 @@ export const skipQuestion = (questionId) => ({
   type: SKIP_QUESTION,
   questionId,
 });
+
+export const selectQuestionAndChangeQuestionVisualizing = (questionId) =>
+  (dispatch, getState) => {
+    dispatch(selectQuestion(questionId));
+
+    const answeredQuestionIds = Object.keys(getState().visualization.questions);
+    const previousQuestionId = getPreviousQuestionId(questionId, answeredQuestionIds);
+    dispatch(selectQuestionToVisualize(previousQuestionId));
+  };
 
 export const SELECT_QUESTION = 'SELECT_QUESTION';
 export const selectQuestion = (questionId) => ({

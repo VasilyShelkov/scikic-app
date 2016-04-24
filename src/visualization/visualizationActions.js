@@ -69,9 +69,9 @@ export const doVisualization = (questionId) =>
           features: [],
           nodes: {}
         };
+        const answeredQuestionIds = Object.keys(getState().visualization.questions);
+        const previousQuestionId = getPreviousQuestionId(questionId, answeredQuestionIds);
         // previousQuestionId is false when there's no previous questions but can be 0
-        const previousAnsweredQuestionIds = Object.keys(getState().visualization.questions);
-        const previousQuestionId = getPreviousQuestionId(questionId, previousAnsweredQuestionIds);
         if (previousQuestionId !== false && previousQuestionId >= 0) {
           previousQuestionInference = getState().visualization.questions[previousQuestionId];
         }

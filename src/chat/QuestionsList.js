@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Typist from 'react-typist';
 import {
   isUserInterested, fetchQuestion, answerQuestionAndVisualize,
-  skipQuestion, selectQuestion, displayErrorMessage
+  skipQuestion, selectQuestionAndChangeQuestionVisualizing, displayErrorMessage
 } from './chatActions';
 import Question from './Question';
 import InterestedInitialQuestion from './InterestedInitialQuestion';
@@ -136,7 +136,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(skipQuestion(questionId));
     dispatch(fetchQuestion());
   },
-  onSelectQuestion: questionId => dispatch(selectQuestion(questionId)),
+  onSelectQuestion: questionId => dispatch(selectQuestionAndChangeQuestionVisualizing(questionId)),
   onError: message => dispatch(displayErrorMessage(message)),
 });
 
