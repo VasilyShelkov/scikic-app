@@ -43,7 +43,7 @@ export const answerQuestionAndVisualize = (questionId, answer) =>
     newPromiseChain()
       .then(() => dispatch(answerQuestion(questionId, answer)))
       .then(() => dispatch(startVisualization()))
-      .then(() => dispatch(doVisualization(questionId, getState().visualization.questionVisualizing)));
+      .then(() => dispatch(doVisualization(questionId)));
 
 export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const answerQuestion = (questionId, answer) => ({

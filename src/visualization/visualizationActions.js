@@ -1,7 +1,9 @@
-import { newPromiseChain, fetchPost } from './../utilities';
-import { finishVisualization, fetchQuestion, selectQuestion } from './../chat/chatActions';
+import { newPromiseChain, fetchPost, getPreviousQuestionId } from './../utilities';
+import {
+  finishVisualization, fetchQuestion, selectQuestion, hideErrorMessage
+} from './../chat/chatActions';
 
-export const doVisualization = (questionId, previousQuestionId) =>
+export const doVisualization = (questionId) =>
   (dispatch, getState) =>
     newPromiseChain()
       .then(() => dispatch(requestInference(questionId)))
@@ -68,6 +70,8 @@ export const doVisualization = (questionId, previousQuestionId) =>
           nodes: {}
         };
         // previousQuestionId is false when there's no previous questions but can be 0
+        const previousAnsweredQuestionIds = Object.keys(getState().visualization.questions);
+        const previousQuestionId = getPreviousQuestionId(questionId, previousAnsweredQuestionIds);
         if (previousQuestionId !== false && previousQuestionId >= 0) {
           previousQuestionInference = getState().visualization.questions[previousQuestionId];
         }
@@ -78,7 +82,8 @@ export const doVisualization = (questionId, previousQuestionId) =>
         ));
       })
       .then(() => dispatch(selectQuestionToVisualize(questionId)))
-      .then(() => dispatch(finishQuestionVisualization(questionId)));
+      .then(() => dispatch(finishQuestionVisualization(questionId)))
+      .then(() => dispatch(hideErrorMessage()));
 
 export const REQUEST_INFERENCE = 'REQUEST_INFERENCE';
 export const requestInference = (questionId) => ({
@@ -116,7 +121,7 @@ export const finishQuestionVisualization = (questionId) =>
         dispatch(selectQuestion(newQuestionId));
         // if the question has an answer do a new visualization
         if (getState().chat.questions.list[newQuestionId].answer) {
-          dispatch(doVisualization(newQuestionId, questionId));
+          dispatch(doVisualization(newQuestionId));
         }
         // keep looping until either got to the end of the questions asked
         // there is a question that isn't skipped
