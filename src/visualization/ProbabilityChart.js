@@ -78,8 +78,10 @@ class ProbabilityChart extends Component {
 
   render() {
     return (
-      <div className="col-md-3" ref="mountPoint" style={{ textAlign: 'center' }}>
-        <b>{this.props.feature.node}</b>
+      <div className="col-xs-12 col-sm-6 col-md-3" ref="mountPoint" style={{ textAlign: 'center' }}>
+        <div style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+          <b>{this.props.feature.node}</b>
+        </div>
       </div>
     );
   }
