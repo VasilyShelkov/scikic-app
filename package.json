@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node devServer.js",
-    "test": "NODE_ENV=test mocha ./src/**/*.spec.js --compilers js:babel-core/register"
+    "test": "NODE_ENV=test mocha $(find src -name '*.spec.js') --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",

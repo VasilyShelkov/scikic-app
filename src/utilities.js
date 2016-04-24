@@ -13,6 +13,37 @@ export const newPromiseChain = () => (
   })
 );
 
+
+/**
+ * Given a proposed question id, find what the previous question id is
+ * @param int representing the proposed question
+ * @param [int] representing the ids of the questions already answered
+ * @returns int or false (if there is no previous questionId)
+ */
+export const getPreviousQuestionId = (questionId, currentlyAnsweredQuestions) => {
+  // if the inputted question has already been answered return it's already answered id
+  if (currentlyAnsweredQuestions.indexOf(questionId) !== -1) {
+    return questionId;
+  }
+
+  // otherwise add the question id to the currentlyAnsweredQuestions and sort it
+  const answeredQuestionsWithQuestionToFindPrevious = [
+    ...currentlyAnsweredQuestions,
+    questionId
+  ].sort();
+
+  // get the index of where the answer would hypthetically be
+  const proposedQuestionIdIndex = answeredQuestionsWithQuestionToFindPrevious.indexOf(questionId);
+
+  // If the index is 0, that means there is no previous answer so return false
+  if (proposedQuestionIdIndex === 0) {
+    return false;
+  }
+
+  // otherwise return the where the question id would be in the answered questions and get the previous index
+  return answeredQuestionsWithQuestionToFindPrevious[proposedQuestionIdIndex - 1];
+};
+
 /**
  * Generates the boilerplate headers for a JSON GET request
  * @returns {{method: string, headers: {Accept: string, Content-Type: string}}}
@@ -152,13 +183,21 @@ export const exampleRecievedInference = {
   }
 };
 
-export const examplePreviousInferenceFeatures = [{
-  distribution: [1],
-  quartiles: {
-    upper: 0,
-    lower: 0,
-    mean: 0,
-  },
-  node: 'factor_gender',
-  color: '#1f77b4',
-}];
+export const examplePreviousInference = {
+  features: [{
+    distribution: [1],
+    quartiles: {
+      upper: 0,
+      lower: 0,
+      mean: 0,
+    },
+    node: 'factor_gender',
+    color: '#1f77b4',
+  }],
+  nodes: {
+    factor_gender: {
+      name: 'factor_gender',
+      color: '#1f77b4',
+    }
+  }
+};

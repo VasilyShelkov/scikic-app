@@ -1,6 +1,6 @@
 import d3 from 'd3';
 import {
-  REQUEST_INFERENCE, RECEIVE_INFERENCE, START_QUESTION_VISUALIZATION
+  REQUEST_INFERENCE, RECEIVE_INFERENCE, SELECT_QUESTION_TO_VISUALIZE
 } from './visualizationActions';
 
 const categoryColors = d3.scale.category20();
@@ -31,7 +31,7 @@ const visualizationReducer = (state = initialState, action) => {
       isFetchingQuestionInference: false,
     };
   }
-  case START_QUESTION_VISUALIZATION:
+  case SELECT_QUESTION_TO_VISUALIZE:
     return {
       ...state,
       questionVisualizing: action.questionId,
@@ -48,19 +48,20 @@ const questionInference = (state = {}, action) => {
     let colorIndex = Object.keys(action.previousQuestionInference.nodes).length + 1;
     if (action.questionInference.relationships.length > 0) {
       nodes = action.questionInference.relationships.reduce((nodesThatExist, relationship) => {
+        let newNodesThatExist = { ...nodesThatExist };
         if (!nodesThatExist[relationship.parent]) {
-          nodesThatExist[relationship.parent] = {
+          newNodesThatExist[relationship.parent] = {
             name: relationship.parent,
             color: categoryColors(colorIndex++)
           };
         }
         if (!nodesThatExist[relationship.child]) {
-          nodesThatExist[relationship.child] = {
+          newNodesThatExist[relationship.child] = {
             name: relationship.child,
             color: categoryColors(colorIndex++)
           };
         }
-        return nodesThatExist;
+        return newNodesThatExist;
       }, action.previousQuestionInference.nodes);
     } else if (Object.keys(action.questionInference.features).length > 0) {
       Object.keys(action.questionInference.features).forEach(

@@ -77,7 +77,7 @@ export const doVisualization = (questionId, previousQuestionId) =>
           previousQuestionInference
         ));
       })
-      .then(() => dispatch(startQuestionVisualization(questionId)))
+      .then(() => dispatch(selectQuestionToVisualize(questionId)))
       .then(() => dispatch(finishQuestionVisualization(questionId)));
 
 export const REQUEST_INFERENCE = 'REQUEST_INFERENCE';
@@ -94,9 +94,9 @@ export const receiveInference = (questionId, questionInference, previousQuestion
   previousQuestionInference,
 });
 
-export const START_QUESTION_VISUALIZATION = 'START_QUESTION_VISUALIZATION';
-export const startQuestionVisualization = (questionId) => ({
-  type: START_QUESTION_VISUALIZATION,
+export const SELECT_QUESTION_TO_VISUALIZE = 'SELECT_QUESTION_TO_VISUALIZE';
+export const selectQuestionToVisualize = (questionId) => ({
+  type: SELECT_QUESTION_TO_VISUALIZE,
   questionId
 });
 
