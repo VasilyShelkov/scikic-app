@@ -46,8 +46,16 @@ class QuestionsList extends Component {
       }
 
       // hide the initial interested question and show the questions to ask the user...
-      if (this.props.chat.interested) {
+      if (this.props.chat.interested && $(this.uninterested).hasClass('hidden')) {
         $(this.initial).transition({
+          animation: 'slide down',
+          onComplete: () => $(this.questions).transition('slide down')
+        });
+      }
+
+      // hide the uninterested message and show the questions to ask the user if they change their mind
+      if (this.props.chat.interested && !$(this.uninterested).hasClass('hidden')) {
+        $(this.uninterested).transition({
           animation: 'slide down',
           onComplete: () => $(this.questions).transition('slide down')
         });
@@ -101,14 +109,21 @@ class QuestionsList extends Component {
         </div>
 
         <div style={{ width: '100%' }} ref={(node) => this.uninterested = node }>
-          <div className="ui message">
-            {chat.interested === false && (
-              <Typist className="header" startDelay={1000} avgTypingDelay={40}>
-                It is a shame you do not want to try me . . . &nbsp; <br />
-                Thank you for your interest !
+          {chat.interested === false && (
+            <div className="ui message">
+              <Typist className="header" startDelay={1000} avgTypingDelay={40}
+                onTypingDone={() => $('#change').transition('swing down')}
+              >
+                It is a shame you do not want to try me . . . &nbsp;Thank you for your interest !
               </Typist>
-            )}
-          </div>
+              <br />
+              <button id="change" className="ui black button transition hidden"
+                onClick={() => onUserInterested(true)}
+              >
+                Change your mind ?
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );

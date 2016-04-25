@@ -6,7 +6,7 @@ import FeatureNetwork from './FeatureNetwork';
 
 let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInference }) => (
   <div className="col-xs-12 col-md-6 col-lg-7 col-xl-8"
-    style={{ height: `${$(window).height()}px` }}
+    style={{ height: `${$(window).height() * 0.9}px` }}
   >
     { Object.keys(questionInference).length > 0 &&
       <div className="ui blurring raised segment">
@@ -55,7 +55,7 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
       </div>
     }
     <div className={`ui ${isDoingInference ? 'active' : ''} dimmer`}>
-      <div className="ui text loader">The Scikic is working its magic...</div>
+      <div className="ui large text loader">The Scikic is working its magic...</div>
     </div>
   </div>
 );
