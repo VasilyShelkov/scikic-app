@@ -14,9 +14,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: 'public' });
-});
 app.use('/public', express.static('public'));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/semantic', express.static(path.join(__dirname, 'semantic')));
@@ -30,9 +27,8 @@ app.use('/typist', express.static(
 	)
 );
 
-
 app.get('*', (req, res) => {
-  res.status(404).end('sorry that page does not exist...');
+  res.sendFile('index.html', { root: 'public' });
 });
 
 app.listen(port, (err) => {

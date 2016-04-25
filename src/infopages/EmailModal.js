@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 const EmailModal = () => {
-  let sender;
+  let sender, content;
   return (
 		<div className="ui modal" style={{ right: 'auto', bottom: 'auto' }}>
 			<div className="header">Drop us an Email</div>
@@ -14,13 +14,22 @@ const EmailModal = () => {
 					<br />
 					<div className="field">
 						<label>Questions</label>
-						<textarea></textarea>
+						<textarea ref={node => {
+  						content = node;
+  					}}></textarea>
 					</div>
 				</div>
 			</div>
 
 			<div className="actions">
-				<div className="ui approve positive animated button">
+				<div className="ui approve positive animated button" onClick={() => {
+          const data = {
+            from: sender.value,
+            to: 'vasilydshelkov@gmail.com',
+            subject: 'Scikic Questions',
+            text: content.value
+          };
+        }}>
 					<div className="visible content">Send</div>
 					<div className="hidden content">
 						<i className="right send outline icon"></i>
