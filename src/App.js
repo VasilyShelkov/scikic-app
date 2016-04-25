@@ -6,12 +6,14 @@ const App = ({ children }) => (
 	<div>
 		<Menu />
 		<div className="container-fluid">
-			<div className="row">
-        <ErrorMessage />
-      </div>
-
-			<div className="row">
-				{children}
+			<div className="row"></div>
+			<div style={{ marginTop: '70px' }}>
+				<div className="row">
+					<ErrorMessage />
+	      </div>
+				<div className="row">
+					{children}
+	      </div>
 			</div>
 		</div>
 	</div>

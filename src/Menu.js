@@ -17,7 +17,7 @@ class Menu extends Component {
 
   render() {
     return (
-			<div className="ui five item menu inverted">
+			<div className="ui five item menu inverted" style={{ position: 'fixed', zIndex: 2 }}>
 				<Link to="/" className="item">
 					<i className="big home icon"></i>
 					Scikic

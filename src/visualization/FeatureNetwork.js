@@ -4,7 +4,7 @@ import d3 from 'd3';
 class FeatureNetwork extends Component {
   componentDidMount() {
     const width = $(this.refs.mountPoint).width();
-    const height = $(window).height() * 0.55;
+    const height = this.props.height;
 
     const force = this.props.force
       .size([width, height]);
@@ -36,7 +36,7 @@ class FeatureNetwork extends Component {
 
   componentDidUpdate() {
     const width = $(this.refs.mountPoint).width();
-    const height = $(window).height() * 0.55;
+    const height = this.props.height;
 
     const force = this.props.force.size([width, height]);
 

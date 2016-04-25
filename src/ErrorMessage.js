@@ -18,6 +18,7 @@ let ErrorMessage = ({ error, onHideError }) => {
             }}
           />
           <div className="header">
+            <i className="warning icon"></i>
             {error}
           </div>
         </div>
