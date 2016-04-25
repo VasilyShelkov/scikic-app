@@ -9,7 +9,12 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
     style={{ height: `${$(window).height()}px` }}
   >
     { Object.keys(questionInference).length > 0 &&
-      <div className="ui blurring segment">
+      <div className="ui blurring raised segment">
+        {currentQuestionVisualizing !== false &&
+          <div className="ui big green ribbon label">
+            <i className="bar chart icon"></i> Question {parseInt(currentQuestionVisualizing, 10) + 1}
+          </div>
+        }
         <div className="container">
           <div className="row">
             {currentQuestionVisualizing !== false ?
