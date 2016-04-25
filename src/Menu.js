@@ -17,7 +17,7 @@ class Menu extends Component {
 
   render() {
     return (
-			<div className="ui five item menu inverted" style={{ position: 'fixed', zIndex: 2 }}>
+			<div className="ui four item menu inverted" style={{ position: 'fixed', zIndex: 2 }}>
 				<Link to="/" className="item">
 					<i className="big home icon"></i>
 					Scikic
@@ -30,10 +30,10 @@ class Menu extends Component {
 					<i className="big child icon"></i>
 					Who Made Me
 				</Link>
-				<Link to="faqs" className="item">
+				{/*<Link to="faqs" className="item">
 					<i className="big puzzle icon"></i>
 					FAQs
-				</Link>
+				</Link>*/}
 				<a className="item email">
 					<i className="big mail icon"></i>
 					Email Us Questions

@@ -16,7 +16,7 @@ const Motivation = () => (
 						<div className="header">Medicine</div>
 						<div className="description">
 							<p>
-								In the future with the data we could Assess the potential
+								In the future we could use the data to assess the potential
 								that internet and social media data can provide to personalised medicine.
 							</p>
 						</div>

@@ -4,7 +4,7 @@ const WhoMadeMe = () => (
 	<div className="container-fluid">
 		<div className="ui raised very padded inverted segment">
 			<div className="ui one huge inverted statistics">
-				<div className="statistic" style={{ textAlign: 'center' }}>
+				<div className="statistic">
 					<div className="value">
 						<i className="users icon"></i> 3
 					</div>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import d3 from 'd3';
 import ProbabilityChart from './ProbabilityChart';
 import FeatureNetwork from './FeatureNetwork';
+import Typist from 'react-typist';
 
 let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInference }) => (
   <div className="col-xs-12 col-md-6 col-lg-7 col-xl-8"
@@ -60,9 +61,34 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
           }}></i>
         </div>
     }
+
     <div className={`ui ${isDoingInference ? 'active' : ''} dimmer`}>
       <div className="ui large text loader">The Scikic is working its magic...</div>
     </div>
+
+    { Object.keys(questionInference).length > 0 &&
+      questionInference[currentQuestionVisualizing] &&
+      questionInference[currentQuestionVisualizing].textInsights.length > 0 && (
+        <div className="ui raised very padded inverted segment">
+          <div className="ui one huge inverted statistics">
+            <div className="statistic">
+              <div className="value">
+                <i className="idea icon"></i> {questionInference[currentQuestionVisualizing].textInsights.length}
+              </div>
+              <div className="label">
+                Insights
+              </div>
+            </div>
+          </div>
+          {questionInference[currentQuestionVisualizing].textInsights.map(insight => (
+            <Typist className="header" startDelay={1000} avgTypingDelay={40}>
+              {insight}
+              <br />
+            </Typist>
+          ))}
+        </div>
+      )
+    }
   </div>
 );
 

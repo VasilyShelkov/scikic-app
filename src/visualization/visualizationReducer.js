@@ -112,11 +112,21 @@ const questionInference = (state = {}, action) => {
       return [...features];
     }, action.previousQuestionInference.features);
 
+    let textInsights = Object.keys(action.questionInference.insights);
+
+    const testInsightList = textInsights.reduce((justTextInsights, insight) => {
+      if (!insight.includes('list') && !insight.includes('debug')) {
+        return [...justTextInsights, action.questionInference.insights[insight]];
+      }
+
+      return justTextInsights;
+    }, []);
+
     return {
       ...state,
       facts: action.questionInference.facts,
       features: newFeatures,
-      textInsights: action.questionInference.insights,
+      textInsights: testInsightList,
       nodes,
       relationships: action.questionInference.relationships.map(relationship => ({
         source: nodes[relationship.parent],
