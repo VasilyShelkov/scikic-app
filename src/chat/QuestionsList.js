@@ -71,7 +71,7 @@ class QuestionsList extends Component {
           <div className="ui segment" ref={(node) => this.questions = node }>
             <div className="container">
               {chat.questions.list.map(question => (
-                <Question questionId={question.id} string={question.string}
+                <Question key={`q${question.id}`} questionId={question.id} string={question.string}
                   answerType={question.expectedAnswerType} options={question.options}
                   currentlySelected={question.id === chat.questions.currentlySelected}
                   skipped={question.skipped} answer={question.answer}

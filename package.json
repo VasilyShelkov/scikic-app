@@ -4,7 +4,9 @@
   "description": "A web application for the scikic",
   "main": "src/index.js",
   "scripts": {
-    "start": "node devServer.js",
+    "start": "npm run build && node server.js",
+    "dev": "NODE_ENV=development node server.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js --progress --profile --colors",
     "test": "NODE_ENV=test mocha $(find src -name '*.spec.js') --compilers js:babel-core/register"
   },
   "repository": {
@@ -40,7 +42,7 @@
     "react-router": "^2.2.2",
     "react-typist": "^0.3.0",
     "redux": "^3.4.0",
-    "redux-thunk": "^2.0.1"
+    "redux-thunk": "^2.0.1",
   },
   "devDependencies": {
     "babel-core": "^6.7.6",

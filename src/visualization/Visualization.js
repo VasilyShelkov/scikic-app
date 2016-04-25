@@ -80,8 +80,10 @@ let Visualization = ({ questionInference, currentQuestionVisualizing, isDoingInf
               </div>
             </div>
           </div>
-          {questionInference[currentQuestionVisualizing].textInsights.map(insight => (
-            <Typist className="header" startDelay={1000} avgTypingDelay={40}>
+          {questionInference[currentQuestionVisualizing].textInsights.map((insight, i) => (
+            <Typist key={`insight${currentQuestionVisualizing}i${i}`}
+              className="header" startDelay={1000} avgTypingDelay={40}
+            >
               {insight}
               <br />
             </Typist>

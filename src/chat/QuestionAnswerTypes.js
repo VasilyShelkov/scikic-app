@@ -71,6 +71,9 @@ export class MultipleOptionsAnswer extends Component {
       // ie a different question was answered and still visualizing
       $(`#q${this.props.questionId}answer`).dropdown('restore default text');
     }
+
+    // hide the dropdown if the question has changed in anyway
+    $(`#q${this.props.questionId}answer`).dropdown('hide');
   }
 
   render() {
@@ -98,8 +101,9 @@ export class MultipleOptionsAnswer extends Component {
           className={`${numberOfButtons} ui buttons transition hidden`}
         >
           {
-            options.map(answerOption => (
-              <button className={`ui ${answer && answerOption === answer && 'green'} button`}
+            options.map((answerOption, i) => (
+              <button key={`q${questionId}o${i}`}
+                className={`ui ${answer && answerOption === answer && 'green'} button`}
                 onClick={() => onAnswer(answerOption)}
               >
                 {answer && answerOption === answer && <i className="checkmark icon"></i>}
@@ -128,7 +132,7 @@ export class MultipleOptionsAnswer extends Component {
             options.map((answerOption, i) => (
               <div key={`q${questionId}o${i}`} className="item option"
                 style={answer && answerOption === answer ? answeredStyle : {}}
-                data-value={answerOption}
+                data-value={answerOption} onClick={e => e.stopPropagation()}
               >
                 {answer && answerOption === answer && <i className="checkmark green icon"></i>}
                 {answerOption}

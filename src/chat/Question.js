@@ -21,7 +21,7 @@ const Question = ({
             onTypingDone={() => $(`#q${questionId}answer`).transition({
               animation: 'swing down',
               onComplete: () => {
-                // if it's the dropdown then open it
+                // if it's the dropdown then open it if the question is selected
                 if (options && options.length > 4 && currentlySelected) {
                   $(`#q${questionId}answer`).dropdown('show');
                 }

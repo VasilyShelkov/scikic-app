@@ -72,6 +72,10 @@ const questionInference = (state = {}, action) => {
           };
         }
       );
+      nodes = {
+        ...nodes,
+        ...action.previousQuestionInference.nodes,
+      };
     } else {
       nodes = {};
     }
