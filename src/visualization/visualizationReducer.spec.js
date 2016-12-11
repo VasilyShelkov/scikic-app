@@ -49,7 +49,12 @@ describe('#visualizationReducer', () => {
             node: 'factor_age',
             color: categoryColors(2),
           }],
-          textInsights: exampleRecievedInference.insights,
+          textInsights: [
+            'Languages spoken in your area include Spanish, French, French Creole, Portuguese or Portuguese Creole, German, Russian, Gujarati, Hindi, Chinese, Japanese, Korean, Thai, Vietnamese, Tagalog, Arabic and an African language',
+            '3% of people in your neighbourhood were born in your state.',
+            'There are 279% more women than men aged 22 to 27 living in your area.',
+            '93% of people in your area are younger than you.',
+          ],
           nodes: {
             factor_gender: {
               name: 'factor_gender',
